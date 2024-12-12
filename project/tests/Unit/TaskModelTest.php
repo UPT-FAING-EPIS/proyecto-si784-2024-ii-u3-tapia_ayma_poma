@@ -19,6 +19,7 @@ class TaskModelTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que se pueda crear una tarea exitosamente con datos válidos.
      */
     public function testCreateTaskSuccess()
@@ -47,6 +48,7 @@ class TaskModelTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que falle la creación de una tarea si faltan datos requeridos.
      */
     public function testCreateTaskFails()
@@ -61,6 +63,7 @@ class TaskModelTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que se puedan obtener las tareas asociadas a un usuario exitosamente.
      */
     public function testGetTasksByUserSuccess()
@@ -96,6 +99,7 @@ class TaskModelTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que se pueda actualizar una tarea exitosamente con datos válidos.
      */
     public function testUpdateTaskSuccess()
@@ -128,6 +132,7 @@ class TaskModelTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que falle la actualización de una tarea si faltan campos requeridos.
      */
     public function testUpdateTaskFailsWithoutRequiredFields()
@@ -142,6 +147,7 @@ class TaskModelTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que se pueda eliminar una tarea exitosamente por su ID.
      */
     public function testDeleteTaskSuccess()
@@ -164,6 +170,7 @@ class TaskModelTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que se puedan obtener los detalles de una tarea por su ID exitosamente.
      */
     public function testGetTaskByIdSuccess()
@@ -191,6 +198,7 @@ class TaskModelTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que retorne null si no se encuentra una tarea con el ID dado.
      */
     public function testGetTaskByIdReturnsNullIfNotFound()

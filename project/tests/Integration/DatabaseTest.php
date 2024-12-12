@@ -10,6 +10,7 @@ use PDOException;
 class DatabaseTest extends TestCase
 {
     /**
+     * @group integration
      * Verifica que la conexión a la base de datos se establezca correctamente con una configuración válida.
      */
     public function testDatabaseConnectionWithValidConfig()
@@ -36,6 +37,7 @@ class DatabaseTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que se lance una excepción al proporcionar una configuración inválida.
      */
     public function testInvalidDatabaseConfiguration()
@@ -60,6 +62,7 @@ class DatabaseTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que el modo de error de PDO se configure correctamente.
      */
     public function testPdoErrorModeIsSetCorrectly()
@@ -87,6 +90,7 @@ class DatabaseTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que se establezcan correctamente los atributos de PDO.
      */
     public function testPdoAttributesAreSetCorrectly()
@@ -115,6 +119,7 @@ class DatabaseTest extends TestCase
 
 
     /**
+     * @group integration
      * Verifica que se lance una excepción al fallar la conexión a la base de datos.
      */
     public function testDatabaseConnectionFails()
@@ -136,6 +141,7 @@ class DatabaseTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que se lance una excepción al fallar la conexión con credenciales incorrectas.
      */
     public function testConnectionThrowsPdoExceptionOnFailure()
@@ -156,6 +162,7 @@ class DatabaseTest extends TestCase
         };
     }
     /**
+     * @group integration
      * Verifica que se lance una excepción al intentar establecer conexión con credenciales inválidas.
      */
     public function testDatabaseConnectionWithInvalidCredentials()
@@ -182,6 +189,7 @@ class DatabaseTest extends TestCase
         };
     }
     /**
+     * @group integration
      * Verifica que se lance una excepción para configuraciones inválidas repetidas.
      */
     public function testThrowsExceptionForInvalidConfiguration()

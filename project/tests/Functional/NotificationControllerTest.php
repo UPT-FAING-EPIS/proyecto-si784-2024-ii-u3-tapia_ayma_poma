@@ -146,6 +146,7 @@ class NotificationControllerTest extends TestCase
 
     // PRUEBAS DE INTEGRACIÓN
     /**
+     * @group integration
      * Verifica que el controlador gestione correctamente la creación de una notificación con un ID de usuario inválido.
      */
     public function testCreateNotificationWithInvalidUserId()
@@ -171,6 +172,7 @@ class NotificationControllerTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que el controlador devuelva las notificaciones asociadas a un usuario.
      */
     public function testShowNotifications()
@@ -196,6 +198,7 @@ class NotificationControllerTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que no se puedan mostrar notificaciones si no hay un usuario logueado.
      */
     public function testShowNotificationsWithoutUserLoggedIn()
@@ -215,6 +218,7 @@ class NotificationControllerTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que el método falle al eliminar una notificación sin un ID válido.
      */
     public function testDeleteNotificationWithoutId()
@@ -237,6 +241,7 @@ class NotificationControllerTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que el método falle si se intenta marcar como leída una notificación inexistente.
      */
     public function testMarkAsReadWithFailure()

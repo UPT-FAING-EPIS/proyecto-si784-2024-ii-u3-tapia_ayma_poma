@@ -19,6 +19,7 @@ class NotificationModelTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que se pueda crear una notificación exitosamente con datos válidos.
      */
     public function testCreateNotificationSuccess()
@@ -45,6 +46,7 @@ class NotificationModelTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que falle la creación de una notificación si faltan campos requeridos.
      */
     public function testCreateNotificationFailsWithoutRequiredFields()
@@ -57,6 +59,7 @@ class NotificationModelTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que se puedan obtener las notificaciones asociadas a un usuario exitosamente.
      */
     public function testGetNotificationsByUserSuccess()
@@ -87,6 +90,7 @@ class NotificationModelTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que se pueda marcar una notificación como leída exitosamente.
      */
     public function testMarkAsReadSuccess()
@@ -110,6 +114,7 @@ class NotificationModelTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que se pueda eliminar una notificación exitosamente por su ID.
      */
     public function testDeleteNotificationSuccess()

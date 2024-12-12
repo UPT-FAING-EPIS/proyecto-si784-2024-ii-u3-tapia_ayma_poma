@@ -1,5 +1,4 @@
 <?php
-
 namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
@@ -20,6 +19,7 @@ class CategoryModelTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que se pueda crear una categoría exitosamente con datos válidos.
      */
     public function testCreateCategorySuccess()
@@ -43,6 +43,7 @@ class CategoryModelTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que falle la creación de una categoría si no se proporciona el campo 'name'.
      */
     public function testCreateCategoryFailsWithoutName()
@@ -53,6 +54,7 @@ class CategoryModelTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que se puedan obtener todas las categorías exitosamente.
      */
     public function testGetCategoriesSuccess()
@@ -82,6 +84,7 @@ class CategoryModelTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que se pueda obtener una categoría específica por su ID exitosamente.
      */
     public function testGetCategoryByIdSuccess()
@@ -112,6 +115,7 @@ class CategoryModelTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que se pueda actualizar una categoría exitosamente con datos válidos.
      */
     public function testUpdateCategorySuccess()
@@ -142,6 +146,7 @@ class CategoryModelTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que falle la actualización de una categoría si no se proporciona el campo 'id'.
      */
     public function testUpdateCategoryFailsWithoutId()
@@ -152,6 +157,7 @@ class CategoryModelTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que se pueda eliminar una categoría exitosamente por su ID.
      */
     public function testDeleteCategorySuccess()

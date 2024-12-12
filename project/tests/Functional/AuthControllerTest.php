@@ -236,7 +236,9 @@ class AuthControllerTest extends TestCase
     }
 
     // PRUEBAS DE INTEGRACIÓN
+
     /**
+     * @group integration
      * Verifica que un usuario autenticado sea redirigido al dashboard al acceder al login.
      */
     public function testShowLoginRedirectsIfAuthenticated()
@@ -251,6 +253,7 @@ class AuthControllerTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que la vista de login sea generada correctamente para un usuario no autenticado.
      */
     public function testShowLoginIncludesLoginView()
@@ -268,6 +271,7 @@ class AuthControllerTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que un usuario autenticado sea redirigido al dashboard al intentar registrarse.
      */
     public function testShowRegisterRedirectsIfAuthenticated()
@@ -280,6 +284,7 @@ class AuthControllerTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que la vista de registro sea generada correctamente para un usuario no autenticado.
      */
     public function testShowRegisterIncludesRegisterView()

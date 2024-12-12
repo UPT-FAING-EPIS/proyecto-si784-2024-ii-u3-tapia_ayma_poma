@@ -101,6 +101,7 @@ class UserModelTest extends TestCase
     // Pruebas de Integración
 
     /**
+     * @group integration
      * Verifica que un usuario pueda ser encontrado por su correo electrónico.
      */
     public function testFindUserByEmail()
@@ -124,6 +125,7 @@ class UserModelTest extends TestCase
     }
 
     /**
+     * @group integration
      * Verifica que no se encuentre un usuario si el correo electrónico no existe.
      */
     public function testFindUserByEmailNotFound()
