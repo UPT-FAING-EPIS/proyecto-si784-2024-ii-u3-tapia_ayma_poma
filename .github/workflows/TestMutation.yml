@@ -28,6 +28,11 @@ jobs:
         cd project
         composer install
 
+    # Corrige permisos para el directorio de informes
+    - name: Fix permissions for mutation report directory
+      run: |
+        chmod -R 777 project/informes/mutacion
+
     # Genera la cobertura de código en formato XML
     - name: Generate PHPUnit coverage (XML)
       run: |
@@ -38,11 +43,11 @@ jobs:
     - name: Run Infection mutation tests
       run: |
         cd project
-        php vendor/bin/infection --coverage=coverage
+        php vendor/bin/infection --coverage=coverage --log-file=informes/mutacion/infection-log.txt
 
     # (Opcional) Sube el informe de Infection como artefacto
     - name: Upload mutation test report as artifact
       uses: actions/upload-artifact@v3
       with:
         name: infection-mutation-report
-        path: project/infection-log.txt
+        path: project/informes/mutacion/infection-log.txt
