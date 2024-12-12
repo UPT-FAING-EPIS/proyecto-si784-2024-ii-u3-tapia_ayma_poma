@@ -43,13 +43,13 @@ jobs:
     - name: Generate infection HTML report
       run: |
         cd project
-        php vendor/bin/infection --coverage=coverage --logger-html=informes/mutacion/infection-report.html
+        php vendor/bin/infection --coverage=coverage --logger-html=informes/mutacion/infection-log.html
 
-    # Genera un resumen redirigiendo el output
+    # Genera el resumen de mutaciones en formato de progreso
     - name: Generate infection summary
       run: |
         cd project
-        php vendor/bin/infection --coverage=coverage --log-verbosity=all > informes/mutacion/infection-summary.txt
+        php vendor/bin/infection --coverage=coverage --formatter=progress > informes/mutacion/infection-summary.txt
 
     # Sube los informes de Infection como artefactos
     - name: Upload mutation test reports as artifacts
@@ -58,4 +58,4 @@ jobs:
         name: infection-mutation-reports
         path: |
           project/informes/mutacion/infection-summary.txt
-          project/informes/mutacion/infection-report.html
+          project/informes/mutacion/infection-log.html
