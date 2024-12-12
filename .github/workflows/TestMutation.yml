@@ -43,7 +43,7 @@ jobs:
     - name: Run Infection mutation tests
       run: |
         cd project
-        php vendor/bin/infection --coverage=coverage --log-file=informes/mutacion/infection-log.txt
+        php vendor/bin/infection --coverage=coverage 
 
     # (Opcional) Sube el informe de Infection como artefacto
     - name: Upload mutation test report as artifact
