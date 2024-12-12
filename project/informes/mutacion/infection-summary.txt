@@ -1,9 +1,9 @@
 Total: 206
 
-Killed: 178
+Killed: 196
 Errored: 0
 Syntax Errors: 0
-Escaped: 18
+Escaped: 0
 Timed Out: 0
 Skipped: 0
 Ignored: 0
