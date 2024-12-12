@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant Usuario
+    participant Vista
+    participant Controlador
+    participant Modelo
+
+    Usuario ->> Vista: Solicita editar el estado de una tarea
+    Vista ->> Controlador: Envía solicitud con el ID y nuevo estado
+    Controlador ->> Modelo: Actualiza el estado en la base de datos
+    Modelo ->> Controlador: Confirma la actualización
+    Controlador ->> Vista: Envía confirmación a la vista
+    Vista ->> Usuario: Muestra mensaje de estado actualizado

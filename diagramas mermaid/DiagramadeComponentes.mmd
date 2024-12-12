@@ -1,0 +1,49 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#D9E8FF', 'edgeLabelBackground':'#FFFFFF'}}}%%
+graph TD
+    subgraph "task system"
+        subgraph VIEW
+            A[dashboard.php]
+            B[create_task.php]
+            C[edit_task.php]
+            D[task_form.php]
+            E[task_list.php]
+            F[login.php]
+            G[register.php]
+        end
+        subgraph CONTROLLER
+            H[NotificationController.php]
+            I[TaskController.php]
+            J[AuthController.php]
+        end
+        subgraph MODEL
+            K[NotificationModel.php]
+            L[TaskModel.php]
+            M[CategoryModel.php]
+            N[Database.php]
+            O[UserModel.php]
+        end
+    end
+
+    subgraph "SistemadeTareas"
+        P[Vista principal de la pagina]
+    end
+
+    %% Connections
+    P --> A
+
+    %% VIEW connections
+    A --> I
+    B --> I
+    C --> I
+    D --> I
+    E --> I
+    F --> J
+    G --> J
+
+    %% CONTROLLER to MODEL connections
+    H --> K
+    I --> L
+    I --> M
+    I --> N
+    J --> O
+    J --> N

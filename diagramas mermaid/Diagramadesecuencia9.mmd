@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant Usuario
+    participant Vista
+    participant Controlador
+    participant Modelo
+
+    Usuario ->> Vista: Llenar formulario de registro
+    Vista ->> Controlador: Enviar datos del formulario
+    Controlador ->> Modelo: Validar datos
+    Modelo ->> Controlador: Resultado de la validación (Éxito/Error)
+    Controlador ->> Vista: Mostrar mensaje al usuario
+    Vista ->> Usuario: Respuesta final

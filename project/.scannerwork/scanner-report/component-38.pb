@@ -1,0 +1,1 @@
+& 2cssXhrcoverage-report/_css/custom.css

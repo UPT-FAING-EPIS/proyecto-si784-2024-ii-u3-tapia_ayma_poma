@@ -1,0 +1,53 @@
+name: Run Playwright Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Puedes cambiar a windows-latest si necesitas un entorno de Windows
+
+    strategy:
+      matrix:
+        # Definimos una matriz de versiones de Node.js
+        node-version: [18.x]  # Especifica la versión de Node.js que estás utilizando
+
+    steps:
+      # Paso 1: Realizar un "checkout" del código
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Paso 2: Instalar .NET SDK
+      - name: Set up .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0'  # Cambia esta versión si estás utilizando otra versión de .NET
+
+      # Paso 3: Restaurar dependencias de .NET
+      - name: Restore .NET dependencies
+        run: dotnet restore
+
+      # Paso 4: Construir el proyecto .NET
+      - name: Build .NET project
+        run: dotnet build --configuration Release
+
+
+      # Paso 6: Subir resultados de las pruebas
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: test-results.trx
+
+      # Paso 7: Subir videos y trazas de Playwright (si se generan)
+      - name: Upload Playwright trace and videos
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-traces
+          path: playwright-traces/

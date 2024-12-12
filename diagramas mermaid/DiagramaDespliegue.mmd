@@ -1,0 +1,35 @@
+flowchart TD
+    subgraph Dispositivos
+        PC["PC"]
+        Tablet["Tablet"]
+        Smartphone["Smartphone"]
+        Internet["Internet"]
+        PC --> Internet
+        Tablet --> Internet
+        Smartphone --> Internet
+    end
+
+    subgraph Conexión
+        Firewalls["Firewalls"]
+        WebServer["Web Server"]
+        Internet --> Firewalls
+        Firewalls --> WebServer
+    end
+
+    subgraph "Sistema de Gestión de Tareas"
+        Usuario["Usuario"] --> Controlador["Controlador"]
+        Controlador -->|Renderiza| Vista["Vista"]
+        Vista --> Modelo["Modelo"]
+        Includes["Includes"] --> Controlador
+        Controlador --> Modelo
+    end
+
+    subgraph "Base de Datos"
+        ServidorSQL["ServidorSQL"]
+        BaseDeDatos["BaseDeDatos"]
+        Modelo --> ServidorSQL
+        ServidorSQL --> BaseDeDatos
+    end
+
+    WebServer --> Usuario
+

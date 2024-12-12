@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant Usuario
+    participant Vista
+    participant Controlador
+    participant Modelo
+
+    Usuario->>Vista: Solicita ver tareas
+    Vista->>Controlador: Solicita lista de tareas
+    Controlador->>Modelo: Recupera tareas
+    Modelo-->>Controlador: Retorna lista de tareas
+    Controlador-->>Vista: Muestra las tareas
+    Vista-->>Usuario: Visualiza la lista de tareas

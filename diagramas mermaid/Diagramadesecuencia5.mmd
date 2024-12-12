@@ -1,0 +1,17 @@
+sequenceDiagram
+    participant Usuario
+    participant Vista
+    participant Controlador
+    participant Modelo
+
+    Usuario->>Vista: Selecciona tarea para editar
+    Vista->>Controlador: Solicita datos de la tarea
+    Controlador->>Modelo: Recupera datos de la tarea
+    Modelo-->>Controlador: Retorna datos
+    Controlador-->>Vista: Muestra formulario de edición
+    Usuario->>Vista: Ingresa cambios
+    Vista->>Controlador: Envía los cambios
+    Controlador->>Modelo: Actualiza tarea
+    Modelo-->>Controlador: Retorna estado (éxito o error)
+    Controlador-->>Vista: Muestra tarea actualizada o error
+    Vista-->>Usuario: Confirma los cambios realizados

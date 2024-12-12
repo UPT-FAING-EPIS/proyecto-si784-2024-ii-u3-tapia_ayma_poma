@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant Usuario
+    participant Vista
+    participant Controlador
+    participant Modelo
+
+    Usuario ->> Vista: Solicita eliminar una notificación
+    Vista ->> Controlador: Envía solicitud con el ID de la notificación
+    Controlador ->> Modelo: Elimina la notificación en la base de datos
+    Modelo ->> Controlador: Confirma la eliminación
+    Controlador ->> Vista: Devuelve confirmación de eliminación
+    Vista ->> Usuario: Notifica que la notificación fue eliminada

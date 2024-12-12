@@ -1,0 +1,52 @@
+classDiagram
+    class Categoria {
+        <<C>>
+        - id: int
+        - nombre: string
+        - descripcion: text
+        - creado_en: timestamp
+        + crearCategoria(nombre: string, descripcion: string): void
+        + obtenerTareas(): Lista<Tarea>
+    }
+
+    class Tarea {
+        <<C>>
+        - id: int
+        - usuario_id: int
+        - categoria_id: int
+        - titulo: string
+        - descripcion: text
+        - completada: boolean
+        - fecha_vencimiento: date
+        - creado_en: timestamp
+        + marcarComoCompletada(): void
+        + actualizarTarea(titulo: string, descripcion: string, fecha_vencimiento: date): void
+        + eliminarTarea(): void
+    }
+
+    class Usuario {
+        <<C>>
+        - id: int
+        - nombre: string
+        - correo: string
+        - contrasena: string
+        - creado_en: timestamp
+        + iniciarSesion(correo: string, contrasena: string): boolean
+        + registrar(nombre: string, correo: string, contrasena: string): void
+        + obtenerTareas(): Lista<Tarea>
+    }
+
+    class Notificacion {
+        <<C>>
+        - id: int
+        - usuario_id: int
+        - mensaje: text
+        - leida: boolean
+        - creado_en: timestamp
+        + marcarComoLeida(): void
+        + crearNotification(usuario_id: int, mensaje: string): void
+    }
+
+    Categoria "0..1" --> "0..*" Tarea
+    Usuario "0..1" --> "0..*" Tarea
+    Usuario "0..1" --> "0..*" Notificacion

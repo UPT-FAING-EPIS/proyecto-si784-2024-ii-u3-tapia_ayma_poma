@@ -1,0 +1,28 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#D9E8FF', 'edgeLabelBackground':'#FFFFFF'}}}%%
+graph TD
+    subgraph "task system"
+        subgraph VIEW
+            A[PHP Rending]
+            B[HTML]
+            C[CSS]
+            A --> B
+            B --> C
+        end
+        
+        subgraph MODEL
+            D[10.5.23-MariaDB]
+            E[Base de datos]
+            D --> E
+        end
+        
+        subgraph CONTROLLER
+            F[PHP POST]
+        end
+    end
+
+    %% Connections between components
+    A --> F
+    F --> E
+
+
+

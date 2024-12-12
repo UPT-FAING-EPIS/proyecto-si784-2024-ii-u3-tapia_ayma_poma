@@ -1,0 +1,1 @@
+. 2jsX?hrcoverage-report/_js/file.js

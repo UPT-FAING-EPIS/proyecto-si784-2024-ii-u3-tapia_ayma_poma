@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant Usuario
+    participant Vista
+    participant Controlador
+    participant Modelo
+
+    Usuario->>Vista: Selecciona una tarea para eliminar
+    Vista->>Controlador: Envía solicitud para eliminar tarea
+    Controlador->>Modelo: Elimina tarea
+    Modelo-->>Controlador: Retorna estado (éxito o error)
+    Controlador-->>Vista: Muestra mensaje de confirmación o error
+    Vista-->>Usuario: Visualiza la lista de tareas actualizada

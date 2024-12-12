@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant Usuario
+    participant Vista
+    participant Controlador
+    participant Modelo
+
+    Usuario->>Vista: Solicita ver notificaciones
+    Vista->>Controlador: Envía la solicitud de notificaciones
+    Controlador->>Modelo: Recupera las notificaciones desde la base de datos
+    Modelo-->>Controlador: Devuelve las notificaciones
+    Controlador-->>Vista: Envía las notificaciones a la vista
+    Vista-->>Usuario: Muestra las notificaciones al usuario

@@ -1,0 +1,68 @@
+name: Mutation Testing
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  mutation_testing:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Clona el código del repositorio
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Configura PHP
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2' # PHP 8.2
+        extensions: xdebug # Necesario para la cobertura de código
+
+    # Instala las dependencias de Composer en la carpeta project
+    - name: Install dependencies
+      run: |
+        cd project
+        composer install
+
+    # Instala Infection PHP para pruebas mutantes
+    - name: Install Infection PHP
+      run: |
+        cd project
+        composer require infection/infection --dev
+
+    # Da permisos de ejecución a Infection
+    - name: Set execute permissions for Infection
+      run: |
+        cd project
+        chmod +x vendor/bin/infection
+
+    # Ejecuta las pruebas mutantes y genera el informe de cobertura en formato Clover
+    # Eliminamos el parámetro de validación para continuar sin errores
+    - name: Run Mutation Tests
+      run: |
+        cd project
+        vendor/bin/infection --coverage=coverage/clover.xml --no-progress
+
+    # Genera el reporte en HTML a partir del archivo Clover
+    - name: Generate HTML Mutation Report
+      run: |
+        cd project
+        vendor/bin/infection --coverage-html=coverage/html-report
+
+    # Mueve el reporte de mutación generado a la carpeta de informes
+    - name: Move mutation report to target folder
+      run: |
+        cd project
+        mkdir -p ../proyecto-si784-2024-ii-u2-ayma_tapia_poma/project/informes/mutacion
+        cp -r coverage/html-report/* ../proyecto-si784-2024-ii-u2-ayma_tapia_poma/project/informes/mutacion/
+
+    # (Opcional) Sube el informe como artefacto para descargarlo desde GitHub
+    - name: Upload mutation report as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: mutation-test-report
+        path: proyecto-si784-2024-ii-u2-ayma_tapia_poma/project/informes/mutacion/

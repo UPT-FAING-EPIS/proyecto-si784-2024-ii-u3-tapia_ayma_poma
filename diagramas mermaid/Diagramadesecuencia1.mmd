@@ -1,0 +1,13 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#D9E8FF', 'edgeLabelBackground':'#FFFFFF'}}}%%
+sequenceDiagram
+    participant Usuario
+    participant Vista
+    participant Controlador
+    participant Modelo
+
+    Usuario ->> Vista: Ingresa credenciales
+    Vista ->> Controlador: Envía las credenciales
+    Controlador ->> Modelo: Verifica credenciales
+    Modelo -->> Controlador: Retorna estado (éxito o error)
+    Controlador -->> Vista: Envía mensaje de éxito o error
+    Vista -->> Usuario: Visualiza el mensaje

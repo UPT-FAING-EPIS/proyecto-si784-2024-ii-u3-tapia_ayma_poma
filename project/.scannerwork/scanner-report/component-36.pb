@@ -1,0 +1,1 @@
+$ 2webXÚhr)coverage-report/Models/UserModel.php.html

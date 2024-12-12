@@ -1,0 +1,67 @@
+name: Semgrep Scan
+on:
+  push:
+    branches:
+      - main  # Se ejecutará cuando haya un push a la rama 'main'
+
+jobs:
+  security:
+    runs-on: ubuntu-latest  # Ejecutar en un entorno Ubuntu
+
+    steps:
+    # Paso 1: Descargar el código del repositorio
+    - name: Checkout Repository
+      uses: actions/checkout@v4  # Usar la última versión de actions/checkout
+
+    # Paso 2: Configurar Semgrep con Docker
+    - name: Set up Semgrep
+      run: docker pull semgrep/semgrep  # Descargar la imagen de Semgrep
+
+    # Paso 3: Ejecutar Semgrep con salida SARIF
+    - name: Run Semgrep (SARIF Output)
+      run: |
+        docker run --rm -v $(pwd):/src semgrep/semgrep semgrep scan --config="p/php" --sarif --output=report.sarif --metrics=off  # Ejecutar el análisis y generar reporte SARIF
+
+    # Paso 4: Subir el archivo SARIF a GitHub Code Scanning
+    - name: Upload SARIF result to GitHub Code Scanning
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: report.sarif  # Subir el archivo SARIF generado
+
+    # Paso 5: Ejecutar Semgrep con salida JSON
+    - name: Run Semgrep (JSON Output)
+      run: |
+        docker run --rm -v $(pwd):/src semgrep/semgrep semgrep scan --config="p/php" --json --output semgrep.json --metrics=off  # Ejecutar el análisis y generar reporte JSON
+
+    # Paso 6: Instalar prospector2html para convertir JSON a HTML
+    - name: Install prospector-html
+      run: |
+        python -m pip install --upgrade pip
+        pip install prospector2html  # Instalar la herramienta para convertir JSON a HTML
+
+    # Paso 7: Convertir los resultados JSON de Semgrep a HTML
+    - name: Convert Semgrep results to HTML
+      run: |
+        prospector-html --input semgrep.json --output semgrep-report.html --filter semgrep || true  # Convertir el JSON a HTML
+
+    # Paso 8: Mover el reporte HTML a la carpeta 'informes/segrem'
+    - name: Move report to Reportes folder
+      run: |
+        mkdir -p project/informes/segrem  # Crear la carpeta si no existe
+        mv semgrep-report.html project/informes/segrem/  # Mover el reporte HTML a la carpeta
+
+    # Paso 9: Configurar Git para publicar en GitHub Pages
+    - name: Configure Git for GitHub Pages
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
+
+    # Paso 10: Publicar el reporte HTML en la rama gh-pages
+    - name: Publish report to GitHub Pages
+      run: |
+        git fetch origin gh-pages  # Fetch la rama gh-pages
+        git checkout gh-pages || git checkout --orphan gh-pages  # Si no existe, crea una nueva rama
+        cp project/informes/segrem/semgrep-report.html semgrep-report.html  # Copiar el reporte HTML generado
+        git add semgrep-report.html  # Añadir el archivo HTML a la rama gh-pages
+        git commit -m "Publishing Semgrep report as semgrep-report.html" || echo "No changes to commit"  # Si no hay cambios, no hacer commit
+        git push origin gh-pages  # Subir los cambios a la rama gh-pages
