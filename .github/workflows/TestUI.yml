@@ -1,4 +1,4 @@
-name: Run Playwright Tests
+name: Generate Test Report
 
 on:
   push:
@@ -9,45 +9,54 @@ on:
       - main
 
 jobs:
-  test:
-    runs-on: ubuntu-latest  # Puedes cambiar a windows-latest si necesitas un entorno de Windows
-
-    strategy:
-      matrix:
-        # Definimos una matriz de versiones de Node.js
-        node-version: [18.x]  # Especifica la versión de Node.js que estás utilizando
+  build-and-test:
+    runs-on: ubuntu-latest
 
     steps:
-      # Paso 1: Realizar un "checkout" del código
+      # Configurar el repositorio
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Paso 2: Instalar .NET SDK
-      - name: Set up .NET SDK
+      # Instalar .NET 8
+      - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '6.0'  # Cambia esta versión si estás utilizando otra versión de .NET
+          dotnet-version: '8.x'
 
-      # Paso 3: Restaurar dependencias de .NET
-      - name: Restore .NET dependencies
-        run: dotnet restore
+      # Instalar dependencias de Playwright (ajustar si no usas Playwright)
+      - name: Install Playwright dependencies
+        run: |
+          dotnet build project/tests/UI/AppTest.csproj
+          pwsh ./project/tests/UI/bin/Debug/net8.0/playwright.ps1 install
 
-      # Paso 4: Construir el proyecto .NET
-      - name: Build .NET project
-        run: dotnet build --configuration Release
+      # Limpiar videos anteriores (si existen)
+      - name: Clean old videos
+        run: rm -rf project/tests/UI/videos
 
+      # Construir y ejecutar pruebas
+      - name: Build and Test
+        run: |
+          dotnet build project/tests/UI/AppTest.csproj
+          dotnet test project/tests/UI/AppTest.csproj --collect:"XPlat Code Coverage"
 
-      # Paso 6: Subir resultados de las pruebas
-      - name: Upload test results
+      # Subir videos como artefactos
+      - name: Upload Test Videos
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: test-results
-          path: test-results.trx
+          name: test-videos
+          path: project/tests/UI/videos/
 
-      # Paso 7: Subir videos y trazas de Playwright (si se generan)
-      - name: Upload Playwright trace and videos
+      # Generar Reporte de Cobertura
+      - name: Generate Coverage Report
+        run: |
+          dotnet tool install -g dotnet-reportgenerator-globaltool
+          export PATH="$PATH:~/.dotnet/tools"
+          reportgenerator -reports:"**/coverage.cobertura.xml" -targetdir:"coverage-report" -reporttypes:HTML
+
+      # Publicar artefactos (Reporte HTML)
+      - name: Upload Coverage Report
         uses: actions/upload-artifact@v3
         with:
-          name: playwright-traces
-          path: playwright-traces/
+          name: coverage-report
+          path: coverage-report/
