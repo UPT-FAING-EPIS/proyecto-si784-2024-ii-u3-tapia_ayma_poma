@@ -39,15 +39,33 @@ jobs:
         cd project
         php vendor/bin/phpunit --coverage-xml=coverage
 
-    # Ejecuta las pruebas de mutación con Infection
-    - name: Run Infection mutation tests
+    # Genera el archivo infection-log.txt
+    - name: Generate infection log
       run: |
         cd project
-        php vendor/bin/infection --coverage=coverage 
+        php vendor/bin/infection --coverage=coverage \
+          --log-file=informes/mutacion/infection-log.txt
 
-    # (Opcional) Sube el informe de Infection como artefacto
-    - name: Upload mutation test report as artifact
+    # Genera el archivo infection-summary.txt
+    - name: Generate infection summary
+      run: |
+        cd project
+        php vendor/bin/infection --coverage=coverage \
+          --summary-log=informes/mutacion/infection-summary.txt
+
+    # Genera el archivo infection-report.html
+    - name: Generate infection HTML report
+      run: |
+        cd project
+        php vendor/bin/infection --coverage=coverage \
+          --html=informes/mutacion/infection-report.html
+
+    # Sube los informes de Infection como artefactos
+    - name: Upload mutation test reports as artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: infection-mutation-report
-        path: project/informes/mutacion/infection-log.txt
+        name: infection-mutation-reports
+        path: |
+          project/informes/mutacion/infection-log.txt
+          project/informes/mutacion/infection-summary.txt
+          project/informes/mutacion/infection-report.html
