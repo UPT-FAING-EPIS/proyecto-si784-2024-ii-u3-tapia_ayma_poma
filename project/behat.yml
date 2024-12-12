@@ -1,0 +1,13 @@
+default:
+  suites:
+    default:
+      paths:
+        - features/         # Carpeta donde se encuentran los archivos `.feature`
+      contexts:
+        - FeatureContext    # Contexto de pasos definido en PHP
+  extensions:
+    Behat\MinkExtension:
+      base_url: http://localhost:8000
+      sessions:
+        default:
+          goutte: ~

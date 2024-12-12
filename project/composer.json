@@ -16,7 +16,10 @@
         "phpunit/phpunit": "^11.4",
         "mockery/mockery": "^1.6",
         "phpunit/php-code-coverage": "^11.0",
-        "infection/infection": "^0.29.8"
+        "infection/infection": "^0.29.8",
+        "behat/behat": "3.9",
+        "behat/mink-extension": "2.3",
+        "behat/mink-goutte-driver": "1.2"
     },
     "autoload": {
         "psr-4": {
