@@ -53,14 +53,20 @@ jobs:
     # Paso 9: Configurar Git para hacer commit en la rama main
     - name: Configure Git for main branch
       run: |
-        git config --global user.name "github-actions"
-        git config --global user.email "github-actions@github.com"
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-    # Paso 10: Publicar el reporte HTML en la rama main
-    - name: Publish report to main branch
+    # Paso 10: Commit y push de los informes a la rama main
+    - name: Push Semgrep reports to main branch
       run: |
-        git checkout main  # Asegurarse de estar en la rama 'main'
-        cp informes/segrem/semgrep-report.html semgrep-report.html  # Copiar el reporte HTML generado
-        git add semgrep-report.html  # Añadir el archivo HTML a la rama main
-        git commit -m "Publishing Semgrep report as semgrep-report.html" || echo "No changes to commit"  # Si no hay cambios, no hacer commit
-        git push origin main  # Subir los cambios a la rama main
+        git add informes/segrem/*
+        git commit -m "Add Semgrep reports" || echo "No changes to commit"
+        
+        # Limpiar cualquier cambio no confirmado
+        git reset --hard
+
+        # Asegurarse de que los cambios remotos estén integrados
+        git pull origin main --rebase
+
+        # Subir los cambios a la rama main
+        git push origin main
