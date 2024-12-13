@@ -14,9 +14,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout del código
-      - name: Checkout repository
+      # Checkout del código con todo el historial
+      - name: Checkout repository with full history
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Obtiene todo el historial de cambios para evitar el clon superficial
 
       # Configurar PHP 8.2
       - name: Set up PHP
@@ -29,7 +31,6 @@ jobs:
         run: |
           cd project  # Cambiar a la carpeta del proyecto
           composer install
-
 
       # Ejecutar el análisis de SonarCloud utilizando el archivo 'sonar-project.properties'
       - name: Run SonarCloud Analysis
