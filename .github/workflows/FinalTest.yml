@@ -48,17 +48,17 @@ jobs:
     - name: Generate PHPUnit coverage (XML)
       run: |
         cd project
-        ~/.phpenv/versions/8.2/bin/php vendor/bin/phpunit --coverage-xml=coverage
+        php vendor/bin/phpunit --coverage-xml=coverage
 
     - name: Generate infection HTML report
       run: |
         cd project
-        ~/.phpenv/versions/8.2/bin/php vendor/bin/infection --coverage=coverage --logger-html=informes/mutacion/infection-log.html
+        php vendor/bin/infection --coverage=coverage --logger-html=informes/mutacion/infection-log.html
 
     - name: Generate infection summary
       run: |
         cd project
-        ~/.phpenv/versions/8.2/bin/php vendor/bin/infection --coverage=coverage --formatter=progress > informes/mutacion/infection-summary.txt
+        php vendor/bin/infection --coverage=coverage --formatter=progress > informes/mutacion/infection-summary.txt
 
     # Sube los informes como artefactos
     - name: Upload mutation test reports as artifacts
