@@ -43,6 +43,11 @@ jobs:
           sudo mv allure-2.18.1 /opt/allure
           sudo ln -s /opt/allure/bin/allure /usr/local/bin/allure
 
+      - name: Set execute permissions for codecept
+        run: |
+          cd project
+          chmod +x vendor/bin/codecept
+
       - name: Bootstrap Codeception
         run: |
           cd project  # Cambia al directorio del proyecto
