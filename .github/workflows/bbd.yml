@@ -67,4 +67,4 @@ jobs:
       - name: Generate Allure Report
         run: |
           cd project  # Cambia al directorio del proyecto
-          allure generate tests/_output/allure-results -o ./project/bbd --clean  # Genera el reporte de Allure
+          allure generate tests/_output/allure-results -o ./informes/bbd --clean  # Genera el reporte de Allure
