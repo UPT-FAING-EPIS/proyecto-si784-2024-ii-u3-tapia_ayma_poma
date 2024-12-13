@@ -47,7 +47,13 @@ jobs:
         run: |
           cd project  # Cambia al directorio del proyecto
           chmod +x vendor/bin/codecept  # Otorga permisos de ejecución a Codeception
-
+      - name: Check Codeception and Allure installation
+        run: |
+          cd project
+          composer validate
+          composer info codeception/codeception
+          composer info allure-framework/allure-codeception
+          vendor/bin/codecept --version
       - name: Build Codeception
         run: |
           cd project  # Cambia al directorio del proyecto
@@ -56,7 +62,7 @@ jobs:
       - name: Run Tests
         run: |
           cd project  # Cambia al directorio del proyecto
-          vendor/bin/codecept run --debug --ext Qameta\Allure\Codeception\AllureCodeception  # Ejecuta las pruebas y genera el reporte
+          vendor/bin/codecept run --debug --ext "Qameta\Allure\Codeception\AllureCodeception"
 
       - name: Generate Allure Report
         run: |
