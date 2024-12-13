@@ -30,6 +30,7 @@ jobs:
           cd project  # Cambiar a la carpeta del proyecto
           composer install
 
+
       # Ejecutar el análisis de SonarCloud utilizando el archivo 'sonar-project.properties'
       - name: Run SonarCloud Analysis
         uses: SonarSource/sonarcloud-github-action@v2
@@ -37,41 +38,3 @@ jobs:
           projectBaseDir: project  # Ruta al directorio base donde está el archivo 'sonar-project.properties'
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Usa el token almacenado en los secretos
-
-      # Generar reporte SARIF (usando la API de SonarCloud)
-      - name: Generate SARIF Report
-        run: |
-          curl -u ${SONAR_TOKEN}: -X POST "https://sonarcloud.io/api/ce/submit?projectKey=${{ secrets.SONAR_PROJECT_KEY }}" --output project/informes/sonarqube/sonar-report.sarif
-
-      # Generar reporte HTML con SonarQube
-      - name: Generate HTML Report
-        run: |
-          curl -u ${SONAR_TOKEN}: -X GET "https://sonarcloud.io/api/reports/generate?reportFormat=html&projectKey=${{ secrets.SONAR_PROJECT_KEY }}" --output project/informes/sonarqube/sonar-report.html
-
-      # Mover cualquier otro reporte necesario a 'project/informes/sonarqube'
-      - name: Move other reports to SonarQube folder
-        run: |
-          mkdir -p project/informes/sonarqube
-          mv sonar-report.html project/informes/sonarqube/
-          mv sonar-report.sarif project/informes/sonarqube/
-
-      # Configurar Git para hacer commit en la rama main
-      - name: Configure Git for main branch
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-      # Commit y push de los informes a la rama main
-      - name: Push SonarQube reports to main branch
-        run: |
-          git add project/informes/sonarqube/*
-          git commit -m "Add SonarQube reports" || echo "No changes to commit"
-          
-          # Limpiar cualquier cambio no confirmado
-          git reset --hard
-
-          # Asegurarse de que los cambios remotos estén integrados
-          git pull origin main --rebase
-
-          # Subir los cambios a la rama main
-          git push origin main
