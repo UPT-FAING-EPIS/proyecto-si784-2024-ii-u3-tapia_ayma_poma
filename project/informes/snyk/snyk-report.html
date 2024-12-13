@@ -525,7 +525,7 @@
           </svg>
         </a>
         <div class="test-meta">
-          <p class="timestamp">December 13th 2024, 6:01:03 am (UTC+00:00)</p>
+          <p class="timestamp">December 13th 2024, 6:03:46 am (UTC+00:00)</p>
           <div class="filepath" title="/home/runner/work/proyecto-si784-2024-ii-u3-tapia_ayma_poma/proyecto-si784-2024-ii-u3-tapia_ayma_poma">Source: /home/runner/work/proyecto-si784-2024-ii-u3-tapia_ayma_poma/proyecto-si784-2024-ii-u3-tapia_ayma_poma</div>
         </div>
       </div>
@@ -551,11 +551,285 @@
         <div class="source-panel">
           <span class="source-panel__heading">Scan Coverage</span>
           <ul class="scan-coverage">
-            <li class="type">XML files: <strong>36</strong></li><li class="type">JavaScript files: <strong>20</strong></li><li class="type">PHP files: <strong>2770</strong></li><li class="type">Python files: <strong>1</strong></li><li class="type">HTML files: <strong>48</strong></li><li class="type">C# files: <strong>3</strong></li>
+            <li class="type">Python files: <strong>1</strong></li><li class="type">XML files: <strong>36</strong></li><li class="type">C# files: <strong>3</strong></li><li class="type">JavaScript files: <strong>20</strong></li><li class="type">PHP files: <strong>2770</strong></li><li class="type">HTML files: <strong>48</strong></li>
           </ul>            
         </div>
       </div>
         <div class="cards--vuln filter--patch filter--ignore">
+          <div class="card card--vuln  disclosure--not-new severity--high" data-snyk-test="high">
+              <header class="card__header">
+                  <div class="card__header__main">
+                      <div class="severity-icon severity-icon--high"></div>
+                      <h2 class="card__title">Cross-site Scripting (XSS)</h2>
+                      <div class="card__actions">
+                          <span class="card__action card-dataflow is-selected" onclick="toggleCardView(event)">Data Flow</span>
+                          <span class="card__action card-fix" onclick="toggleCardView(event)">Fix Analysis</span>
+                      </div>
+                  </div>
+                  <ul class="card__meta">
+                      <li class="card__meta__item">SNYK-CODE</li>
+                      <li class="card__meta__item">CWE-79</li>
+                      <li class="card__meta__item">XSS</li>
+                  </ul>
+              </header>
+              <div class="card__section">
+                  <div class="card__summary severity--high">
+                      <p>Unsanitized input from an HTTP header flows into die/exit, where it is used to render an HTML page returned to the user. This may result in a Cross-Site Scripting attack (XSS).</p>
+                      <div class="file-location">Found in: <strong>project/vendor/composer/xdebug-handler/src/XdebugHandler.php (line : 319)</strong></div>    
+                  </div>
+                  <div class="card__panel dataflow">
+                      <h2 class="card__panel__heading"><span class="heading-char">⇣</span> Data Flow</h2>
+                      <div class="dataflow__filename"> project/vendor/composer/xdebug-handler/src/XdebugHandler.php</div>
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">664:22</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">            foreach (<br /></span><span class="marker">$_SERVER[&#x27;argv&#x27;] </span><span class="dataflow__codesuffix">as $value) {</span></div>
+                          <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span>
+                          <span class="dataflow__step">0</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">664:22</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">            foreach (<br /></span><span class="marker">$_SERVER[&#x27;argv&#x27;] </span><span class="dataflow__codesuffix">as $value) {</span></div>
+                          
+                          <span class="dataflow__step">1</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">664:42</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">            foreach ($_SERVER[&#x27;argv&#x27;] as <br /></span><span class="marker">$value)</span><span class="dataflow__codesuffix"> {</span></div>
+                          
+                          <span class="dataflow__step">2</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">665:32</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">                if (!is_string(<br /></span><span class="marker">$value)</span><span class="dataflow__codesuffix">) {</span></div>
+                          
+                          <span class="dataflow__step">3</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">669:29</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">                $result[] &#x3D; <br /></span><span class="marker">$value;</span><span class="dataflow__codesuffix"></span></div>
+                          
+                          <span class="dataflow__step">4</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">673:22</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        return count(<br /></span><span class="marker">$result)</span><span class="dataflow__codesuffix"> &gt; 0 ? $result : null;</span></div>
+                          
+                          <span class="dataflow__step">5</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">673:37</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        return count($result) &gt; 0 ? <br /></span><span class="marker">$result </span><span class="dataflow__codesuffix">: null;</span></div>
+                          
+                          <span class="dataflow__step">6</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">350:50</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        if (!$this-&gt;checkMainScript($mainScript, <br /></span><span class="marker">$argv)</span><span class="dataflow__codesuffix">) {</span></div>
+                          
+                          <span class="dataflow__step">7</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">381:34</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        return $this-&gt;getCommand(<br /></span><span class="marker">$argv,</span><span class="dataflow__codesuffix"> $tmpfile, $mainScript);</span></div>
+                          
+                          <span class="dataflow__step">8</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">439:29</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $args &#x3D; array_slice(<br /></span><span class="marker">$argv,</span><span class="dataflow__codesuffix"> 1);</span></div>
+                          
+                          <span class="dataflow__step">9</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">439:17</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $args &#x3D; <br /></span><span class="marker">array_slice(</span><span class="dataflow__codesuffix">$argv, 1);</span></div>
+                          
+                          <span class="dataflow__step">10</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">446:49</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        return array_merge($php, [$mainScript], <br /></span><span class="marker">$args)</span><span class="dataflow__codesuffix">;</span></div>
+                          
+                          <span class="dataflow__step">11</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">446:16</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        return <br /></span><span class="marker">array_merge(</span><span class="dataflow__codesuffix">$php, [$mainScript], $args);</span></div>
+                          
+                          <span class="dataflow__step">12</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">148:17</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">            if (<br /></span><span class="marker">$command </span><span class="dataflow__codesuffix">!&#x3D;&#x3D; null) {</span></div>
+                          
+                          <span class="dataflow__step">13</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">149:32</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">                $this-&gt;restart(<br /></span><span class="marker">$command)</span><span class="dataflow__codesuffix">;</span></div>
+                          
+                          <span class="dataflow__step">14</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">274:26</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $this-&gt;doRestart(<br /></span><span class="marker">$command)</span><span class="dataflow__codesuffix">;</span></div>
+                          
+                          <span class="dataflow__step">15</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">286:20</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">            $cmd &#x3D; <br /></span><span class="marker">$command;</span><span class="dataflow__codesuffix"></span></div>
+                          
+                          <span class="dataflow__step">16</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">287:57</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">            $displayCmd &#x3D; sprintf(&#x27;[%s]&#x27;, implode(&#x27;, &#x27;, <br /></span><span class="marker">$cmd)</span><span class="dataflow__codesuffix">);</span></div>
+                          
+                          <span class="dataflow__step">17</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">300:30</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $process &#x3D; proc_open(<br /></span><span class="marker">$cmd,</span><span class="dataflow__codesuffix"> [], $pipes);</span></div>
+                          
+                          <span class="dataflow__step">18</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">300:20</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $process &#x3D; <br /></span><span class="marker">proc_open(</span><span class="dataflow__codesuffix">$cmd, [], $pipes);</span></div>
+                          
+                          <span class="dataflow__step">19</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">301:25</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        if (is_resource(<br /></span><span class="marker">$process)</span><span class="dataflow__codesuffix">) {</span></div>
+                          
+                          <span class="dataflow__step">20</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">302:36</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">            $exitCode &#x3D; proc_close(<br /></span><span class="marker">$process)</span><span class="dataflow__codesuffix">;</span></div>
+                          
+                          <span class="dataflow__step">21</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">302:25</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">            $exitCode &#x3D; <br /></span><span class="marker">proc_close(</span><span class="dataflow__codesuffix">$process);</span></div>
+                          
+                          <span class="dataflow__step">22</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">305:20</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        if (!isset(<br /></span><span class="marker">$exitCode)</span><span class="dataflow__codesuffix">) {</span></div>
+                          
+                          <span class="dataflow__step">23</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">310:69</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">            $this-&gt;notify(Status::INFO, &#x27;Restarted process exited &#x27;.<br /></span><span class="marker">$exitCode)</span><span class="dataflow__codesuffix">;</span></div>
+                          
+                          <span class="dataflow__step">24</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">319:14</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        exit(<br /></span><span class="marker">$exitCode)</span><span class="dataflow__codesuffix">;</span></div>
+                          
+                          <span class="dataflow__step">25</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">319:14</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        exit(<br /></span><span class="marker">$exitCode)</span><span class="dataflow__codesuffix">;</span></div>
+                          <span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
+                          <span class="dataflow__step">26</span>
+                      </div>
+                  </div>
+                  <div class="card__panel fix-analysis">
+                      <h2 class="card__panel__heading"><span class="heading-char">✓</span> Fix Analysis</h2>
+                      <div class="card__panel__markdown"><h2 id="details">Details</h2>
+          <p>A cross-site scripting attack occurs when the attacker tricks a legitimate web-based application or site to accept a request as originating from a trusted source.</p>
+          <p>This is done by escaping the context of the web application; the web application then delivers that data to its users along with other trusted dynamic content, without validating it. The browser unknowingly executes malicious script on the client side (through client-side languages; usually JavaScript or HTML)  in order to perform actions that are otherwise typically blocked by the browser&#39;s Same Origin Policy.</p>
+          <p>Injecting malicious code is the most prevalent manner by which XSS is exploited; for this reason, escaping characters in order to prevent this manipulation is the top method for securing code against this vulnerability.</p>
+          <p>Escaping means that the application is coded to mark key characters, and particularly key characters included in user input, to prevent those characters from being interpreted in a dangerous context. For example, in HTML, <code>&lt;</code> can be coded as  <code>&amp;lt</code>; and <code>&gt;</code> can be coded as <code>&amp;gt</code>; in order to be interpreted and displayed as themselves in text, while within the code itself, they are used for HTML tags. If malicious content is injected into an application that escapes special characters and that malicious content uses <code>&lt;</code> and <code>&gt;</code> as HTML tags, those characters are nonetheless not interpreted as HTML tags by the browser if they&#39;ve been correctly escaped in the application code and in this way the attempted attack is diverted.</p>
+          <p>The most prominent use of XSS is to steal cookies (source: OWASP HttpOnly) and hijack user sessions, but XSS exploits have been used to expose sensitive information, enable access to privileged services and functionality and deliver malware.</p>
+          <h3 id="types-of-attacks">Types of attacks</h3>
+          <p>There are a few methods by which XSS can be manipulated:</p>
+          <table>
+          <thead>
+          <tr>
+          <th>Type</th>
+          <th>Origin</th>
+          <th>Description</th>
+          </tr>
+          </thead>
+          <tbody><tr>
+          <td><strong>Stored</strong></td>
+          <td>Server</td>
+          <td>The malicious code is inserted in the application (usually as a link) by the attacker. The code is activated every time a user clicks the link.</td>
+          </tr>
+          <tr>
+          <td><strong>Reflected</strong></td>
+          <td>Server</td>
+          <td>The attacker delivers a malicious link externally from the vulnerable web site application to a user. When clicked, malicious code is sent to the vulnerable web site, which reflects the attack back to the user&#39;s browser.</td>
+          </tr>
+          <tr>
+          <td><strong>DOM-based</strong></td>
+          <td>Client</td>
+          <td>The attacker forces the user&#39;s browser to render a malicious page. The data in the page itself delivers the cross-site scripting data.</td>
+          </tr>
+          <tr>
+          <td><strong>Mutated</strong></td>
+          <td></td>
+          <td>The attacker injects code that appears safe, but is then rewritten and modified by the browser, while parsing the markup. An example is rebalancing unclosed quotation marks or even adding quotation marks to unquoted parameters.</td>
+          </tr>
+          </tbody></table>
+          <h3 id="affected-environments">Affected environments</h3>
+          <p>The following environments are susceptible to an XSS attack:</p>
+          <ul>
+          <li>Web servers</li>
+          <li>Application servers</li>
+          <li>Web application environments</li>
+          </ul>
+          <h2 id="best-practices-for-prevention">Best practices for prevention</h2>
+          <p>This section describes the top best practices designed to specifically protect your code:</p>
+          <ul>
+          <li>Sanitize data input in an HTTP request before reflecting it back, ensuring all data is validated, filtered or escaped before echoing anything back to the user, such as the values of query parameters during searches.</li>
+          <li>Convert special characters such as <code>?</code>, <code>&amp;</code>, <code>/</code>, <code>&lt;</code>, <code>&gt;</code> and spaces to their respective HTML or URL encoded equivalents.</li>
+          <li>Give users the option to disable client-side scripts.</li>
+          <li>Redirect invalid requests.</li>
+          <li>Detect simultaneous logins, including those from two separate IP addresses, and invalidate those sessions.</li>
+          <li>Use and enforce a Content Security Policy (source: Wikipedia) to disable any features that might be manipulated for an XSS attack.</li>
+          <li>Read the documentation for any of the libraries referenced in your code to understand which elements allow for embedded HTML.</li>
+          </ul>
+          </div>
+                  </div>
+              </div>
+          </div>
           <div class="card card--vuln  disclosure--not-new severity--high" data-snyk-test="high">
               <header class="card__header">
                   <div class="card__header__main">
@@ -1074,280 +1348,6 @@
               <header class="card__header">
                   <div class="card__header__main">
                       <div class="severity-icon severity-icon--high"></div>
-                      <h2 class="card__title">Cross-site Scripting (XSS)</h2>
-                      <div class="card__actions">
-                          <span class="card__action card-dataflow is-selected" onclick="toggleCardView(event)">Data Flow</span>
-                          <span class="card__action card-fix" onclick="toggleCardView(event)">Fix Analysis</span>
-                      </div>
-                  </div>
-                  <ul class="card__meta">
-                      <li class="card__meta__item">SNYK-CODE</li>
-                      <li class="card__meta__item">CWE-79</li>
-                      <li class="card__meta__item">XSS</li>
-                  </ul>
-              </header>
-              <div class="card__section">
-                  <div class="card__summary severity--high">
-                      <p>Unsanitized input from an HTTP header flows into die/exit, where it is used to render an HTML page returned to the user. This may result in a Cross-Site Scripting attack (XSS).</p>
-                      <div class="file-location">Found in: <strong>project/vendor/composer/xdebug-handler/src/XdebugHandler.php (line : 319)</strong></div>    
-                  </div>
-                  <div class="card__panel dataflow">
-                      <h2 class="card__panel__heading"><span class="heading-char">⇣</span> Data Flow</h2>
-                      <div class="dataflow__filename"> project/vendor/composer/xdebug-handler/src/XdebugHandler.php</div>
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">664:22</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">            foreach (<br /></span><span class="marker">$_SERVER[&#x27;argv&#x27;] </span><span class="dataflow__codesuffix">as $value) {</span></div>
-                          <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span>
-                          <span class="dataflow__step">0</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">664:22</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">            foreach (<br /></span><span class="marker">$_SERVER[&#x27;argv&#x27;] </span><span class="dataflow__codesuffix">as $value) {</span></div>
-                          
-                          <span class="dataflow__step">1</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">664:42</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">            foreach ($_SERVER[&#x27;argv&#x27;] as <br /></span><span class="marker">$value)</span><span class="dataflow__codesuffix"> {</span></div>
-                          
-                          <span class="dataflow__step">2</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">665:32</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">                if (!is_string(<br /></span><span class="marker">$value)</span><span class="dataflow__codesuffix">) {</span></div>
-                          
-                          <span class="dataflow__step">3</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">669:29</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">                $result[] &#x3D; <br /></span><span class="marker">$value;</span><span class="dataflow__codesuffix"></span></div>
-                          
-                          <span class="dataflow__step">4</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">673:22</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        return count(<br /></span><span class="marker">$result)</span><span class="dataflow__codesuffix"> &gt; 0 ? $result : null;</span></div>
-                          
-                          <span class="dataflow__step">5</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">673:37</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        return count($result) &gt; 0 ? <br /></span><span class="marker">$result </span><span class="dataflow__codesuffix">: null;</span></div>
-                          
-                          <span class="dataflow__step">6</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">350:50</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        if (!$this-&gt;checkMainScript($mainScript, <br /></span><span class="marker">$argv)</span><span class="dataflow__codesuffix">) {</span></div>
-                          
-                          <span class="dataflow__step">7</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">381:34</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        return $this-&gt;getCommand(<br /></span><span class="marker">$argv,</span><span class="dataflow__codesuffix"> $tmpfile, $mainScript);</span></div>
-                          
-                          <span class="dataflow__step">8</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">439:29</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $args &#x3D; array_slice(<br /></span><span class="marker">$argv,</span><span class="dataflow__codesuffix"> 1);</span></div>
-                          
-                          <span class="dataflow__step">9</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">439:17</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $args &#x3D; <br /></span><span class="marker">array_slice(</span><span class="dataflow__codesuffix">$argv, 1);</span></div>
-                          
-                          <span class="dataflow__step">10</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">446:49</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        return array_merge($php, [$mainScript], <br /></span><span class="marker">$args)</span><span class="dataflow__codesuffix">;</span></div>
-                          
-                          <span class="dataflow__step">11</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">446:16</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        return <br /></span><span class="marker">array_merge(</span><span class="dataflow__codesuffix">$php, [$mainScript], $args);</span></div>
-                          
-                          <span class="dataflow__step">12</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">148:17</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">            if (<br /></span><span class="marker">$command </span><span class="dataflow__codesuffix">!&#x3D;&#x3D; null) {</span></div>
-                          
-                          <span class="dataflow__step">13</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">149:32</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">                $this-&gt;restart(<br /></span><span class="marker">$command)</span><span class="dataflow__codesuffix">;</span></div>
-                          
-                          <span class="dataflow__step">14</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">274:26</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $this-&gt;doRestart(<br /></span><span class="marker">$command)</span><span class="dataflow__codesuffix">;</span></div>
-                          
-                          <span class="dataflow__step">15</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">286:20</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">            $cmd &#x3D; <br /></span><span class="marker">$command;</span><span class="dataflow__codesuffix"></span></div>
-                          
-                          <span class="dataflow__step">16</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">287:57</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">            $displayCmd &#x3D; sprintf(&#x27;[%s]&#x27;, implode(&#x27;, &#x27;, <br /></span><span class="marker">$cmd)</span><span class="dataflow__codesuffix">);</span></div>
-                          
-                          <span class="dataflow__step">17</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">300:30</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $process &#x3D; proc_open(<br /></span><span class="marker">$cmd,</span><span class="dataflow__codesuffix"> [], $pipes);</span></div>
-                          
-                          <span class="dataflow__step">18</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">300:20</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $process &#x3D; <br /></span><span class="marker">proc_open(</span><span class="dataflow__codesuffix">$cmd, [], $pipes);</span></div>
-                          
-                          <span class="dataflow__step">19</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">301:25</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        if (is_resource(<br /></span><span class="marker">$process)</span><span class="dataflow__codesuffix">) {</span></div>
-                          
-                          <span class="dataflow__step">20</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">302:36</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">            $exitCode &#x3D; proc_close(<br /></span><span class="marker">$process)</span><span class="dataflow__codesuffix">;</span></div>
-                          
-                          <span class="dataflow__step">21</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">302:25</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">            $exitCode &#x3D; <br /></span><span class="marker">proc_close(</span><span class="dataflow__codesuffix">$process);</span></div>
-                          
-                          <span class="dataflow__step">22</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">305:20</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        if (!isset(<br /></span><span class="marker">$exitCode)</span><span class="dataflow__codesuffix">) {</span></div>
-                          
-                          <span class="dataflow__step">23</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">310:69</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">            $this-&gt;notify(Status::INFO, &#x27;Restarted process exited &#x27;.<br /></span><span class="marker">$exitCode)</span><span class="dataflow__codesuffix">;</span></div>
-                          
-                          <span class="dataflow__step">24</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">319:14</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        exit(<br /></span><span class="marker">$exitCode)</span><span class="dataflow__codesuffix">;</span></div>
-                          
-                          <span class="dataflow__step">25</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">319:14</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        exit(<br /></span><span class="marker">$exitCode)</span><span class="dataflow__codesuffix">;</span></div>
-                          <span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
-                          <span class="dataflow__step">26</span>
-                      </div>
-                  </div>
-                  <div class="card__panel fix-analysis">
-                      <h2 class="card__panel__heading"><span class="heading-char">✓</span> Fix Analysis</h2>
-                      <div class="card__panel__markdown"><h2 id="details">Details</h2>
-          <p>A cross-site scripting attack occurs when the attacker tricks a legitimate web-based application or site to accept a request as originating from a trusted source.</p>
-          <p>This is done by escaping the context of the web application; the web application then delivers that data to its users along with other trusted dynamic content, without validating it. The browser unknowingly executes malicious script on the client side (through client-side languages; usually JavaScript or HTML)  in order to perform actions that are otherwise typically blocked by the browser&#39;s Same Origin Policy.</p>
-          <p>Injecting malicious code is the most prevalent manner by which XSS is exploited; for this reason, escaping characters in order to prevent this manipulation is the top method for securing code against this vulnerability.</p>
-          <p>Escaping means that the application is coded to mark key characters, and particularly key characters included in user input, to prevent those characters from being interpreted in a dangerous context. For example, in HTML, <code>&lt;</code> can be coded as  <code>&amp;lt</code>; and <code>&gt;</code> can be coded as <code>&amp;gt</code>; in order to be interpreted and displayed as themselves in text, while within the code itself, they are used for HTML tags. If malicious content is injected into an application that escapes special characters and that malicious content uses <code>&lt;</code> and <code>&gt;</code> as HTML tags, those characters are nonetheless not interpreted as HTML tags by the browser if they&#39;ve been correctly escaped in the application code and in this way the attempted attack is diverted.</p>
-          <p>The most prominent use of XSS is to steal cookies (source: OWASP HttpOnly) and hijack user sessions, but XSS exploits have been used to expose sensitive information, enable access to privileged services and functionality and deliver malware.</p>
-          <h3 id="types-of-attacks">Types of attacks</h3>
-          <p>There are a few methods by which XSS can be manipulated:</p>
-          <table>
-          <thead>
-          <tr>
-          <th>Type</th>
-          <th>Origin</th>
-          <th>Description</th>
-          </tr>
-          </thead>
-          <tbody><tr>
-          <td><strong>Stored</strong></td>
-          <td>Server</td>
-          <td>The malicious code is inserted in the application (usually as a link) by the attacker. The code is activated every time a user clicks the link.</td>
-          </tr>
-          <tr>
-          <td><strong>Reflected</strong></td>
-          <td>Server</td>
-          <td>The attacker delivers a malicious link externally from the vulnerable web site application to a user. When clicked, malicious code is sent to the vulnerable web site, which reflects the attack back to the user&#39;s browser.</td>
-          </tr>
-          <tr>
-          <td><strong>DOM-based</strong></td>
-          <td>Client</td>
-          <td>The attacker forces the user&#39;s browser to render a malicious page. The data in the page itself delivers the cross-site scripting data.</td>
-          </tr>
-          <tr>
-          <td><strong>Mutated</strong></td>
-          <td></td>
-          <td>The attacker injects code that appears safe, but is then rewritten and modified by the browser, while parsing the markup. An example is rebalancing unclosed quotation marks or even adding quotation marks to unquoted parameters.</td>
-          </tr>
-          </tbody></table>
-          <h3 id="affected-environments">Affected environments</h3>
-          <p>The following environments are susceptible to an XSS attack:</p>
-          <ul>
-          <li>Web servers</li>
-          <li>Application servers</li>
-          <li>Web application environments</li>
-          </ul>
-          <h2 id="best-practices-for-prevention">Best practices for prevention</h2>
-          <p>This section describes the top best practices designed to specifically protect your code:</p>
-          <ul>
-          <li>Sanitize data input in an HTTP request before reflecting it back, ensuring all data is validated, filtered or escaped before echoing anything back to the user, such as the values of query parameters during searches.</li>
-          <li>Convert special characters such as <code>?</code>, <code>&amp;</code>, <code>/</code>, <code>&lt;</code>, <code>&gt;</code> and spaces to their respective HTML or URL encoded equivalents.</li>
-          <li>Give users the option to disable client-side scripts.</li>
-          <li>Redirect invalid requests.</li>
-          <li>Detect simultaneous logins, including those from two separate IP addresses, and invalidate those sessions.</li>
-          <li>Use and enforce a Content Security Policy (source: Wikipedia) to disable any features that might be manipulated for an XSS attack.</li>
-          <li>Read the documentation for any of the libraries referenced in your code to understand which elements allow for embedded HTML.</li>
-          </ul>
-          </div>
-                  </div>
-              </div>
-          </div>
-          <div class="card card--vuln  disclosure--not-new severity--high" data-snyk-test="high">
-              <header class="card__header">
-                  <div class="card__header__main">
-                      <div class="severity-icon severity-icon--high"></div>
                       <h2 class="card__title">Code Injection</h2>
                       <div class="card__actions">
                           <span class="card__action card-dataflow is-selected" onclick="toggleCardView(event)">Data Flow</span>
@@ -1719,6 +1719,194 @@
           <li>Remember that code injection can take place on multiple fronts: GET and POST requests, but also cookies and HTTP headers.</li>
           <li>Ensure up-to-date patching across all systems to remediate known vulnerabilities.</li>
           <li>Educate all team members on safer data handling procedures to prevent attacks.</li>
+          </ul>
+          </div>
+                  </div>
+              </div>
+          </div>
+          <div class="card card--vuln  disclosure--not-new severity--medium" data-snyk-test="medium">
+              <header class="card__header">
+                  <div class="card__header__main">
+                      <div class="severity-icon severity-icon--medium"></div>
+                      <h2 class="card__title">Code Injection</h2>
+                      <div class="card__actions">
+                          <span class="card__action card-dataflow is-selected" onclick="toggleCardView(event)">Data Flow</span>
+                          <span class="card__action card-fix" onclick="toggleCardView(event)">Fix Analysis</span>
+                      </div>
+                  </div>
+                  <ul class="card__meta">
+                      <li class="card__meta__item">SNYK-CODE</li>
+                      <li class="card__meta__item">CWE-94</li>
+                      <li class="card__meta__item">CodeInjection</li>
+                  </ul>
+              </header>
+              <div class="card__section">
+                  <div class="card__summary severity--medium">
+                      <p>Unsanitized input from data from a remote resource flows into assert, where it is executed as php code. This may result in a Code Injection vulnerability.</p>
+                      <div class="file-location">Found in: <strong>project/vendor/phpunit/phpunit/src/Runner/ResultCache/DefaultResultCache.php (line : 119)</strong></div>    
+                  </div>
+                  <div class="card__panel dataflow">
+                      <h2 class="card__panel__heading"><span class="heading-char">⇣</span> Data Flow</h2>
+                      <div class="dataflow__filename"> project/vendor/phpunit/phpunit/src/Runner/ResultCache/DefaultResultCache.php</div>
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">96:21</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $contents &#x3D; <br /></span><span class="marker">file_get_contents(</span><span class="dataflow__codesuffix">$this-&gt;cacheFilename);</span></div>
+                          <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span>
+                          <span class="dataflow__step">0</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">96:21</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $contents &#x3D; <br /></span><span class="marker">file_get_contents(</span><span class="dataflow__codesuffix">$this-&gt;cacheFilename);</span></div>
+                          
+                          <span class="dataflow__step">1</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">98:13</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        if (<br /></span><span class="marker">$contents </span><span class="dataflow__codesuffix">&#x3D;&#x3D;&#x3D; false) {</span></div>
+                          
+                          <span class="dataflow__step">2</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">103:13</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">            <br /></span><span class="marker">$contents,</span><span class="dataflow__codesuffix"></span></div>
+                          
+                          <span class="dataflow__step">3</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">102:17</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $data &#x3D; <br /></span><span class="marker">json_decode(</span><span class="dataflow__codesuffix"></span></div>
+                          
+                          <span class="dataflow__step">4</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">119:16</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        assert(<br /></span><span class="marker">isset($data[&#x27;defects&#x27;]) &amp;&amp; is_array($data[&#x27;defects&#x27;]))</span><span class="dataflow__codesuffix">;</span></div>
+                          
+                          <span class="dataflow__step">5</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">119:9</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        <br /></span><span class="marker">assert(</span><span class="dataflow__codesuffix">isset($data[&#x27;defects&#x27;]) &amp;&amp; is_array($data[&#x27;defects&#x27;]));</span></div>
+                          <span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
+                          <span class="dataflow__step">6</span>
+                      </div>
+                  </div>
+                  <div class="card__panel fix-analysis">
+                      <h2 class="card__panel__heading"><span class="heading-char">✓</span> Fix Analysis</h2>
+                      <div class="card__panel__markdown"><h2 id="details">Details</h2>
+          <p>A secure code injection attack occurs when the attacker exploits an existing input processing vulnerability, passing special characters and code directly to a web-based application or site. The code is then executed, potentially granting the user system access to export sensitive data, to install malware, or even to move laterally and to exploit other systems in the trusted internal network environment. While code injection attacks can take place in several ways, the common factor is allowing the user to submit executable code to the application. The most common forms of code injection are SQL injection (server side) and cross-site scripting (XSS) (client side).</p>
+          <h2 id="best-practices-for-prevention">Best practices for prevention</h2>
+          <ul>
+          <li>Never trust user input. Assume any input may transmit harmful values.</li>
+          <li>Apply least privilege principle (for example, limit users to read only wherever possible).</li>
+          <li>Avoid passing raw user input directly to functions; use parameterized queries to extract data first.</li>
+          <li>Sanitize user input strings of special characters such as ?, &amp;, /, &lt;, &gt;, and quotation marks.</li>
+          <li>Use whitelisting of known good values.</li>
+          <li>Validate user input against expected response types.</li>
+          <li>Escape shell commands with functions such as shlex for Python, or escapeshellarg for PHP.</li>
+          <li>Remember that code injection can take place on multiple fronts: GET and POST requests, but also cookies and HTTP headers.</li>
+          <li>Ensure up-to-date patching across all systems to remediate known vulnerabilities so these cannot be exploited by code injection.</li>
+          <li>Educate all team members on safe data handling procedures to prevent attacks.</li>
+          </ul>
+          </div>
+                  </div>
+              </div>
+          </div>
+          <div class="card card--vuln  disclosure--not-new severity--medium" data-snyk-test="medium">
+              <header class="card__header">
+                  <div class="card__header__main">
+                      <div class="severity-icon severity-icon--medium"></div>
+                      <h2 class="card__title">Code Injection</h2>
+                      <div class="card__actions">
+                          <span class="card__action card-dataflow is-selected" onclick="toggleCardView(event)">Data Flow</span>
+                          <span class="card__action card-fix" onclick="toggleCardView(event)">Fix Analysis</span>
+                      </div>
+                  </div>
+                  <ul class="card__meta">
+                      <li class="card__meta__item">SNYK-CODE</li>
+                      <li class="card__meta__item">CWE-94</li>
+                      <li class="card__meta__item">CodeInjection</li>
+                  </ul>
+              </header>
+              <div class="card__section">
+                  <div class="card__summary severity--medium">
+                      <p>Unsanitized input from data from a remote resource flows into assert, where it is executed as php code. This may result in a Code Injection vulnerability.</p>
+                      <div class="file-location">Found in: <strong>project/vendor/phpunit/phpunit/src/Runner/ResultCache/DefaultResultCache.php (line : 120)</strong></div>    
+                  </div>
+                  <div class="card__panel dataflow">
+                      <h2 class="card__panel__heading"><span class="heading-char">⇣</span> Data Flow</h2>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">96:21</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $contents &#x3D; <br /></span><span class="marker">file_get_contents(</span><span class="dataflow__codesuffix">$this-&gt;cacheFilename);</span></div>
+                          <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span>
+                          <span class="dataflow__step">0</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">96:21</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $contents &#x3D; <br /></span><span class="marker">file_get_contents(</span><span class="dataflow__codesuffix">$this-&gt;cacheFilename);</span></div>
+                          
+                          <span class="dataflow__step">1</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">98:13</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        if (<br /></span><span class="marker">$contents </span><span class="dataflow__codesuffix">&#x3D;&#x3D;&#x3D; false) {</span></div>
+                          
+                          <span class="dataflow__step">2</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">103:13</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">            <br /></span><span class="marker">$contents,</span><span class="dataflow__codesuffix"></span></div>
+                          
+                          <span class="dataflow__step">3</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">102:17</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $data &#x3D; <br /></span><span class="marker">json_decode(</span><span class="dataflow__codesuffix"></span></div>
+                          
+                          <span class="dataflow__step">4</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">120:16</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        assert(<br /></span><span class="marker">isset($data[&#x27;times&#x27;]) &amp;&amp; is_array($data[&#x27;times&#x27;]))</span><span class="dataflow__codesuffix">;</span></div>
+                          
+                          <span class="dataflow__step">5</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">120:9</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        <br /></span><span class="marker">assert(</span><span class="dataflow__codesuffix">isset($data[&#x27;times&#x27;]) &amp;&amp; is_array($data[&#x27;times&#x27;]));</span></div>
+                          <span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
+                          <span class="dataflow__step">6</span>
+                      </div>
+                  </div>
+                  <div class="card__panel fix-analysis">
+                      <h2 class="card__panel__heading"><span class="heading-char">✓</span> Fix Analysis</h2>
+                      <div class="card__panel__markdown"><h2 id="details">Details</h2>
+          <p>A secure code injection attack occurs when the attacker exploits an existing input processing vulnerability, passing special characters and code directly to a web-based application or site. The code is then executed, potentially granting the user system access to export sensitive data, to install malware, or even to move laterally and to exploit other systems in the trusted internal network environment. While code injection attacks can take place in several ways, the common factor is allowing the user to submit executable code to the application. The most common forms of code injection are SQL injection (server side) and cross-site scripting (XSS) (client side).</p>
+          <h2 id="best-practices-for-prevention">Best practices for prevention</h2>
+          <ul>
+          <li>Never trust user input. Assume any input may transmit harmful values.</li>
+          <li>Apply least privilege principle (for example, limit users to read only wherever possible).</li>
+          <li>Avoid passing raw user input directly to functions; use parameterized queries to extract data first.</li>
+          <li>Sanitize user input strings of special characters such as ?, &amp;, /, &lt;, &gt;, and quotation marks.</li>
+          <li>Use whitelisting of known good values.</li>
+          <li>Validate user input against expected response types.</li>
+          <li>Escape shell commands with functions such as shlex for Python, or escapeshellarg for PHP.</li>
+          <li>Remember that code injection can take place on multiple fronts: GET and POST requests, but also cookies and HTTP headers.</li>
+          <li>Ensure up-to-date patching across all systems to remediate known vulnerabilities so these cannot be exploited by code injection.</li>
+          <li>Educate all team members on safe data handling procedures to prevent attacks.</li>
           </ul>
           </div>
                   </div>
@@ -2863,194 +3051,6 @@
               <div class="card__section">
                   <div class="card__summary severity--medium">
                       <p>Unsanitized input from data from a remote resource flows into assert, where it is executed as php code. This may result in a Code Injection vulnerability.</p>
-                      <div class="file-location">Found in: <strong>project/vendor/phpunit/phpunit/src/Runner/ResultCache/DefaultResultCache.php (line : 119)</strong></div>    
-                  </div>
-                  <div class="card__panel dataflow">
-                      <h2 class="card__panel__heading"><span class="heading-char">⇣</span> Data Flow</h2>
-                      <div class="dataflow__filename"> project/vendor/phpunit/phpunit/src/Runner/ResultCache/DefaultResultCache.php</div>
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">96:21</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $contents &#x3D; <br /></span><span class="marker">file_get_contents(</span><span class="dataflow__codesuffix">$this-&gt;cacheFilename);</span></div>
-                          <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span>
-                          <span class="dataflow__step">0</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">96:21</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $contents &#x3D; <br /></span><span class="marker">file_get_contents(</span><span class="dataflow__codesuffix">$this-&gt;cacheFilename);</span></div>
-                          
-                          <span class="dataflow__step">1</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">98:13</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        if (<br /></span><span class="marker">$contents </span><span class="dataflow__codesuffix">&#x3D;&#x3D;&#x3D; false) {</span></div>
-                          
-                          <span class="dataflow__step">2</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">103:13</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">            <br /></span><span class="marker">$contents,</span><span class="dataflow__codesuffix"></span></div>
-                          
-                          <span class="dataflow__step">3</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">102:17</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $data &#x3D; <br /></span><span class="marker">json_decode(</span><span class="dataflow__codesuffix"></span></div>
-                          
-                          <span class="dataflow__step">4</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">119:16</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        assert(<br /></span><span class="marker">isset($data[&#x27;defects&#x27;]) &amp;&amp; is_array($data[&#x27;defects&#x27;]))</span><span class="dataflow__codesuffix">;</span></div>
-                          
-                          <span class="dataflow__step">5</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">119:9</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        <br /></span><span class="marker">assert(</span><span class="dataflow__codesuffix">isset($data[&#x27;defects&#x27;]) &amp;&amp; is_array($data[&#x27;defects&#x27;]));</span></div>
-                          <span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
-                          <span class="dataflow__step">6</span>
-                      </div>
-                  </div>
-                  <div class="card__panel fix-analysis">
-                      <h2 class="card__panel__heading"><span class="heading-char">✓</span> Fix Analysis</h2>
-                      <div class="card__panel__markdown"><h2 id="details">Details</h2>
-          <p>A secure code injection attack occurs when the attacker exploits an existing input processing vulnerability, passing special characters and code directly to a web-based application or site. The code is then executed, potentially granting the user system access to export sensitive data, to install malware, or even to move laterally and to exploit other systems in the trusted internal network environment. While code injection attacks can take place in several ways, the common factor is allowing the user to submit executable code to the application. The most common forms of code injection are SQL injection (server side) and cross-site scripting (XSS) (client side).</p>
-          <h2 id="best-practices-for-prevention">Best practices for prevention</h2>
-          <ul>
-          <li>Never trust user input. Assume any input may transmit harmful values.</li>
-          <li>Apply least privilege principle (for example, limit users to read only wherever possible).</li>
-          <li>Avoid passing raw user input directly to functions; use parameterized queries to extract data first.</li>
-          <li>Sanitize user input strings of special characters such as ?, &amp;, /, &lt;, &gt;, and quotation marks.</li>
-          <li>Use whitelisting of known good values.</li>
-          <li>Validate user input against expected response types.</li>
-          <li>Escape shell commands with functions such as shlex for Python, or escapeshellarg for PHP.</li>
-          <li>Remember that code injection can take place on multiple fronts: GET and POST requests, but also cookies and HTTP headers.</li>
-          <li>Ensure up-to-date patching across all systems to remediate known vulnerabilities so these cannot be exploited by code injection.</li>
-          <li>Educate all team members on safe data handling procedures to prevent attacks.</li>
-          </ul>
-          </div>
-                  </div>
-              </div>
-          </div>
-          <div class="card card--vuln  disclosure--not-new severity--medium" data-snyk-test="medium">
-              <header class="card__header">
-                  <div class="card__header__main">
-                      <div class="severity-icon severity-icon--medium"></div>
-                      <h2 class="card__title">Code Injection</h2>
-                      <div class="card__actions">
-                          <span class="card__action card-dataflow is-selected" onclick="toggleCardView(event)">Data Flow</span>
-                          <span class="card__action card-fix" onclick="toggleCardView(event)">Fix Analysis</span>
-                      </div>
-                  </div>
-                  <ul class="card__meta">
-                      <li class="card__meta__item">SNYK-CODE</li>
-                      <li class="card__meta__item">CWE-94</li>
-                      <li class="card__meta__item">CodeInjection</li>
-                  </ul>
-              </header>
-              <div class="card__section">
-                  <div class="card__summary severity--medium">
-                      <p>Unsanitized input from data from a remote resource flows into assert, where it is executed as php code. This may result in a Code Injection vulnerability.</p>
-                      <div class="file-location">Found in: <strong>project/vendor/phpunit/phpunit/src/Runner/ResultCache/DefaultResultCache.php (line : 120)</strong></div>    
-                  </div>
-                  <div class="card__panel dataflow">
-                      <h2 class="card__panel__heading"><span class="heading-char">⇣</span> Data Flow</h2>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">96:21</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $contents &#x3D; <br /></span><span class="marker">file_get_contents(</span><span class="dataflow__codesuffix">$this-&gt;cacheFilename);</span></div>
-                          <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span>
-                          <span class="dataflow__step">0</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">96:21</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $contents &#x3D; <br /></span><span class="marker">file_get_contents(</span><span class="dataflow__codesuffix">$this-&gt;cacheFilename);</span></div>
-                          
-                          <span class="dataflow__step">1</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">98:13</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        if (<br /></span><span class="marker">$contents </span><span class="dataflow__codesuffix">&#x3D;&#x3D;&#x3D; false) {</span></div>
-                          
-                          <span class="dataflow__step">2</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">103:13</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">            <br /></span><span class="marker">$contents,</span><span class="dataflow__codesuffix"></span></div>
-                          
-                          <span class="dataflow__step">3</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">102:17</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $data &#x3D; <br /></span><span class="marker">json_decode(</span><span class="dataflow__codesuffix"></span></div>
-                          
-                          <span class="dataflow__step">4</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">120:16</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        assert(<br /></span><span class="marker">isset($data[&#x27;times&#x27;]) &amp;&amp; is_array($data[&#x27;times&#x27;]))</span><span class="dataflow__codesuffix">;</span></div>
-                          
-                          <span class="dataflow__step">5</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">120:9</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        <br /></span><span class="marker">assert(</span><span class="dataflow__codesuffix">isset($data[&#x27;times&#x27;]) &amp;&amp; is_array($data[&#x27;times&#x27;]));</span></div>
-                          <span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
-                          <span class="dataflow__step">6</span>
-                      </div>
-                  </div>
-                  <div class="card__panel fix-analysis">
-                      <h2 class="card__panel__heading"><span class="heading-char">✓</span> Fix Analysis</h2>
-                      <div class="card__panel__markdown"><h2 id="details">Details</h2>
-          <p>A secure code injection attack occurs when the attacker exploits an existing input processing vulnerability, passing special characters and code directly to a web-based application or site. The code is then executed, potentially granting the user system access to export sensitive data, to install malware, or even to move laterally and to exploit other systems in the trusted internal network environment. While code injection attacks can take place in several ways, the common factor is allowing the user to submit executable code to the application. The most common forms of code injection are SQL injection (server side) and cross-site scripting (XSS) (client side).</p>
-          <h2 id="best-practices-for-prevention">Best practices for prevention</h2>
-          <ul>
-          <li>Never trust user input. Assume any input may transmit harmful values.</li>
-          <li>Apply least privilege principle (for example, limit users to read only wherever possible).</li>
-          <li>Avoid passing raw user input directly to functions; use parameterized queries to extract data first.</li>
-          <li>Sanitize user input strings of special characters such as ?, &amp;, /, &lt;, &gt;, and quotation marks.</li>
-          <li>Use whitelisting of known good values.</li>
-          <li>Validate user input against expected response types.</li>
-          <li>Escape shell commands with functions such as shlex for Python, or escapeshellarg for PHP.</li>
-          <li>Remember that code injection can take place on multiple fronts: GET and POST requests, but also cookies and HTTP headers.</li>
-          <li>Ensure up-to-date patching across all systems to remediate known vulnerabilities so these cannot be exploited by code injection.</li>
-          <li>Educate all team members on safe data handling procedures to prevent attacks.</li>
-          </ul>
-          </div>
-                  </div>
-              </div>
-          </div>
-          <div class="card card--vuln  disclosure--not-new severity--medium" data-snyk-test="medium">
-              <header class="card__header">
-                  <div class="card__header__main">
-                      <div class="severity-icon severity-icon--medium"></div>
-                      <h2 class="card__title">Code Injection</h2>
-                      <div class="card__actions">
-                          <span class="card__action card-dataflow is-selected" onclick="toggleCardView(event)">Data Flow</span>
-                          <span class="card__action card-fix" onclick="toggleCardView(event)">Fix Analysis</span>
-                      </div>
-                  </div>
-                  <ul class="card__meta">
-                      <li class="card__meta__item">SNYK-CODE</li>
-                      <li class="card__meta__item">CWE-94</li>
-                      <li class="card__meta__item">CodeInjection</li>
-                  </ul>
-              </header>
-              <div class="card__section">
-                  <div class="card__summary severity--medium">
-                      <p>Unsanitized input from data from a remote resource flows into assert, where it is executed as php code. This may result in a Code Injection vulnerability.</p>
                       <div class="file-location">Found in: <strong>project/vendor/sebastian/complexity/src/Calculator.php (line : 38)</strong></div>    
                   </div>
                   <div class="card__panel dataflow">
@@ -3433,6 +3433,102 @@
               </header>
               <div class="card__section">
                   <div class="card__summary severity--low">
+                      <p>MD5 hash (used in md5_file) is insecure. Consider changing it to a secure hashing algorithm.</p>
+                      <div class="file-location">Found in: <strong>project/vendor/thecodingmachine/safe/generated/strings.php (line : 62)</strong></div>    
+                  </div>
+                  <div class="card__panel dataflow">
+                      <h2 class="card__panel__heading"><span class="heading-char">⇣</span> Data Flow</h2>
+                      <div class="dataflow__filename"> project/vendor/thecodingmachine/safe/generated/strings.php</div>
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">62:19</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">    $safeResult &#x3D; <br /></span><span class="marker">\md5_file(</span><span class="dataflow__codesuffix">$filename, $binary);</span></div>
+                          <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span><span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
+                          <span class="dataflow__step">0</span>
+                      </div>
+                  </div>
+                  <div class="card__panel fix-analysis">
+                      <h2 class="card__panel__heading"><span class="heading-char">✓</span> Fix Analysis</h2>
+                      <div class="card__panel__markdown"><h2 id="details">Details</h2>
+          <p>Sensitive information should never be stored in plain text, since this makes it very easy for unauthorized users, whether malicious insiders or outside attackers, to access. Hashing methods are used to make stored passwords and other sensitive data unreadable to users. For example, when a password is defined for the first time, it is hashed and then stored. The next time that user attempts to log on, the password they enter is hashed following the same procedure and compared with the stored value. In this way, the original password never needs to be stored in the system.</p>
+          <p>Hashing is a one-way scheme, meaning a hashed password cannot be reverse engineered. However, if an outdated or custom programmed hashing scheme is used, it becomes simple for an attacker with powerful modern computing power to gain access to the hashes used. This opens up access to all stored password information, leading to breached security. Therefore, it is essential for developers to understand modern, secure password hashing techniques.</p>
+          <h2 id="best-practices-for-prevention">Best practices for prevention</h2>
+          <ul>
+          <li>Use strong standard algorithms for hashing rather than simpler but outdated methods or DIY hashing schemes, which may have inherent weaknesses.</li>
+          <li>Use modular design for all code dealing with hashing so it can be swapped out as security standards change over time.</li>
+          <li>Use salting in combination with hashing (While this places more demands on resources, it is an essential step for tighter security.).</li>
+          <li>Implement zero-trust architecture to ensure that access to password data is granted only for legitimate business purposes.</li>
+          <li>Increase developer awareness of current standards in data security and cryptography.</li>
+          </ul>
+          </div>
+                  </div>
+              </div>
+          </div>
+          <div class="card card--vuln  disclosure--not-new severity--low" data-snyk-test="low">
+              <header class="card__header">
+                  <div class="card__header__main">
+                      <div class="severity-icon severity-icon--low"></div>
+                      <h2 class="card__title">Use of Password Hash With Insufficient Computational Effort</h2>
+                      <div class="card__actions">
+                          <span class="card__action card-dataflow is-selected" onclick="toggleCardView(event)">Data Flow</span>
+                          <span class="card__action card-fix" onclick="toggleCardView(event)">Fix Analysis</span>
+                      </div>
+                  </div>
+                  <ul class="card__meta">
+                      <li class="card__meta__item">SNYK-CODE</li>
+                      <li class="card__meta__item">CWE-916</li>
+                      <li class="card__meta__item">InsecureHash</li>
+                  </ul>
+              </header>
+              <div class="card__section">
+                  <div class="card__summary severity--low">
+                      <p>SHA1 hash (used in sha1_file) is insecure. Consider changing it to a secure hashing algorithm.</p>
+                      <div class="file-location">Found in: <strong>project/vendor/thecodingmachine/safe/generated/strings.php (line : 83)</strong></div>    
+                  </div>
+                  <div class="card__panel dataflow">
+                      <h2 class="card__panel__heading"><span class="heading-char">⇣</span> Data Flow</h2>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">83:19</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">    $safeResult &#x3D; <br /></span><span class="marker">\sha1_file(</span><span class="dataflow__codesuffix">$filename, $binary);</span></div>
+                          <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span><span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
+                          <span class="dataflow__step">0</span>
+                      </div>
+                  </div>
+                  <div class="card__panel fix-analysis">
+                      <h2 class="card__panel__heading"><span class="heading-char">✓</span> Fix Analysis</h2>
+                      <div class="card__panel__markdown"><h2 id="details">Details</h2>
+          <p>Sensitive information should never be stored in plain text, since this makes it very easy for unauthorized users, whether malicious insiders or outside attackers, to access. Hashing methods are used to make stored passwords and other sensitive data unreadable to users. For example, when a password is defined for the first time, it is hashed and then stored. The next time that user attempts to log on, the password they enter is hashed following the same procedure and compared with the stored value. In this way, the original password never needs to be stored in the system.</p>
+          <p>Hashing is a one-way scheme, meaning a hashed password cannot be reverse engineered. However, if an outdated or custom programmed hashing scheme is used, it becomes simple for an attacker with powerful modern computing power to gain access to the hashes used. This opens up access to all stored password information, leading to breached security. Therefore, it is essential for developers to understand modern, secure password hashing techniques.</p>
+          <h2 id="best-practices-for-prevention">Best practices for prevention</h2>
+          <ul>
+          <li>Use strong standard algorithms for hashing rather than simpler but outdated methods or DIY hashing schemes, which may have inherent weaknesses.</li>
+          <li>Use modular design for all code dealing with hashing so it can be swapped out as security standards change over time.</li>
+          <li>Use salting in combination with hashing (While this places more demands on resources, it is an essential step for tighter security.).</li>
+          <li>Implement zero-trust architecture to ensure that access to password data is granted only for legitimate business purposes.</li>
+          <li>Increase developer awareness of current standards in data security and cryptography.</li>
+          </ul>
+          </div>
+                  </div>
+              </div>
+          </div>
+          <div class="card card--vuln  disclosure--not-new severity--low" data-snyk-test="low">
+              <header class="card__header">
+                  <div class="card__header__main">
+                      <div class="severity-icon severity-icon--low"></div>
+                      <h2 class="card__title">Use of Password Hash With Insufficient Computational Effort</h2>
+                      <div class="card__actions">
+                          <span class="card__action card-dataflow is-selected" onclick="toggleCardView(event)">Data Flow</span>
+                          <span class="card__action card-fix" onclick="toggleCardView(event)">Fix Analysis</span>
+                      </div>
+                  </div>
+                  <ul class="card__meta">
+                      <li class="card__meta__item">SNYK-CODE</li>
+                      <li class="card__meta__item">CWE-916</li>
+                      <li class="card__meta__item">InsecureHash</li>
+                  </ul>
+              </header>
+              <div class="card__section">
+                  <div class="card__summary severity--low">
                       <p>MD5 hash (used in md5) is insecure. Consider changing it to a secure hashing algorithm.</p>
                       <div class="file-location">Found in: <strong>project/vendor/phpunit/php-code-coverage/src/StaticAnalysis/CachingFileAnalyser.php (line : 169)</strong></div>    
                   </div>
@@ -3586,150 +3682,6 @@
                       <div class="dataflow__item">
                           <span class="dataflow__lineno" title="line:column">1057:33</span>
                           <div class="dataflow__code"><span class="dataflow__codeprefix">            &#x27;identity&#x27; &#x3D;&gt; &#x27;#&#x27; . <br /></span><span class="marker">\md5(</span><span class="dataflow__codesuffix">\spl_object_hash($object)),</span></div>
-                          <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span><span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
-                          <span class="dataflow__step">0</span>
-                      </div>
-                  </div>
-                  <div class="card__panel fix-analysis">
-                      <h2 class="card__panel__heading"><span class="heading-char">✓</span> Fix Analysis</h2>
-                      <div class="card__panel__markdown"><h2 id="details">Details</h2>
-          <p>Sensitive information should never be stored in plain text, since this makes it very easy for unauthorized users, whether malicious insiders or outside attackers, to access. Hashing methods are used to make stored passwords and other sensitive data unreadable to users. For example, when a password is defined for the first time, it is hashed and then stored. The next time that user attempts to log on, the password they enter is hashed following the same procedure and compared with the stored value. In this way, the original password never needs to be stored in the system.</p>
-          <p>Hashing is a one-way scheme, meaning a hashed password cannot be reverse engineered. However, if an outdated or custom programmed hashing scheme is used, it becomes simple for an attacker with powerful modern computing power to gain access to the hashes used. This opens up access to all stored password information, leading to breached security. Therefore, it is essential for developers to understand modern, secure password hashing techniques.</p>
-          <h2 id="best-practices-for-prevention">Best practices for prevention</h2>
-          <ul>
-          <li>Use strong standard algorithms for hashing rather than simpler but outdated methods or DIY hashing schemes, which may have inherent weaknesses.</li>
-          <li>Use modular design for all code dealing with hashing so it can be swapped out as security standards change over time.</li>
-          <li>Use salting in combination with hashing (While this places more demands on resources, it is an essential step for tighter security.).</li>
-          <li>Implement zero-trust architecture to ensure that access to password data is granted only for legitimate business purposes.</li>
-          <li>Increase developer awareness of current standards in data security and cryptography.</li>
-          </ul>
-          </div>
-                  </div>
-              </div>
-          </div>
-          <div class="card card--vuln  disclosure--not-new severity--low" data-snyk-test="low">
-              <header class="card__header">
-                  <div class="card__header__main">
-                      <div class="severity-icon severity-icon--low"></div>
-                      <h2 class="card__title">Use of Password Hash With Insufficient Computational Effort</h2>
-                      <div class="card__actions">
-                          <span class="card__action card-dataflow is-selected" onclick="toggleCardView(event)">Data Flow</span>
-                          <span class="card__action card-fix" onclick="toggleCardView(event)">Fix Analysis</span>
-                      </div>
-                  </div>
-                  <ul class="card__meta">
-                      <li class="card__meta__item">SNYK-CODE</li>
-                      <li class="card__meta__item">CWE-916</li>
-                      <li class="card__meta__item">InsecureHash</li>
-                  </ul>
-              </header>
-              <div class="card__section">
-                  <div class="card__summary severity--low">
-                      <p>MD5 hash (used in md5) is insecure. Consider changing it to a secure hashing algorithm.</p>
-                      <div class="file-location">Found in: <strong>project/vendor/phpunit/phpunit/src/Framework/MockObject/Generator/Generator.php (line : 213)</strong></div>    
-                  </div>
-                  <div class="card__panel dataflow">
-                      <h2 class="card__panel__heading"><span class="heading-char">⇣</span> Data Flow</h2>
-                      <div class="dataflow__filename"> project/vendor/phpunit/phpunit/src/Framework/MockObject/Generator/Generator.php</div>
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">213:24</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">                substr(<br /></span><span class="marker">md5(</span><span class="dataflow__codesuffix">(string) mt_rand()), 0, 8),</span></div>
-                          <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span><span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
-                          <span class="dataflow__step">0</span>
-                      </div>
-                  </div>
-                  <div class="card__panel fix-analysis">
-                      <h2 class="card__panel__heading"><span class="heading-char">✓</span> Fix Analysis</h2>
-                      <div class="card__panel__markdown"><h2 id="details">Details</h2>
-          <p>Sensitive information should never be stored in plain text, since this makes it very easy for unauthorized users, whether malicious insiders or outside attackers, to access. Hashing methods are used to make stored passwords and other sensitive data unreadable to users. For example, when a password is defined for the first time, it is hashed and then stored. The next time that user attempts to log on, the password they enter is hashed following the same procedure and compared with the stored value. In this way, the original password never needs to be stored in the system.</p>
-          <p>Hashing is a one-way scheme, meaning a hashed password cannot be reverse engineered. However, if an outdated or custom programmed hashing scheme is used, it becomes simple for an attacker with powerful modern computing power to gain access to the hashes used. This opens up access to all stored password information, leading to breached security. Therefore, it is essential for developers to understand modern, secure password hashing techniques.</p>
-          <h2 id="best-practices-for-prevention">Best practices for prevention</h2>
-          <ul>
-          <li>Use strong standard algorithms for hashing rather than simpler but outdated methods or DIY hashing schemes, which may have inherent weaknesses.</li>
-          <li>Use modular design for all code dealing with hashing so it can be swapped out as security standards change over time.</li>
-          <li>Use salting in combination with hashing (While this places more demands on resources, it is an essential step for tighter security.).</li>
-          <li>Implement zero-trust architecture to ensure that access to password data is granted only for legitimate business purposes.</li>
-          <li>Increase developer awareness of current standards in data security and cryptography.</li>
-          </ul>
-          </div>
-                  </div>
-              </div>
-          </div>
-          <div class="card card--vuln  disclosure--not-new severity--low" data-snyk-test="low">
-              <header class="card__header">
-                  <div class="card__header__main">
-                      <div class="severity-icon severity-icon--low"></div>
-                      <h2 class="card__title">Use of Password Hash With Insufficient Computational Effort</h2>
-                      <div class="card__actions">
-                          <span class="card__action card-dataflow is-selected" onclick="toggleCardView(event)">Data Flow</span>
-                          <span class="card__action card-fix" onclick="toggleCardView(event)">Fix Analysis</span>
-                      </div>
-                  </div>
-                  <ul class="card__meta">
-                      <li class="card__meta__item">SNYK-CODE</li>
-                      <li class="card__meta__item">CWE-916</li>
-                      <li class="card__meta__item">InsecureHash</li>
-                  </ul>
-              </header>
-              <div class="card__section">
-                  <div class="card__summary severity--low">
-                      <p>MD5 hash (used in md5) is insecure. Consider changing it to a secure hashing algorithm.</p>
-                      <div class="file-location">Found in: <strong>project/vendor/phpunit/phpunit/src/Framework/MockObject/Generator/Generator.php (line : 423)</strong></div>    
-                  </div>
-                  <div class="card__panel dataflow">
-                      <h2 class="card__panel__heading"><span class="heading-char">⇣</span> Data Flow</h2>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">423:16</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $key &#x3D; <br /></span><span class="marker">md5(</span><span class="dataflow__codesuffix"></span></div>
-                          <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span><span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
-                          <span class="dataflow__step">0</span>
-                      </div>
-                  </div>
-                  <div class="card__panel fix-analysis">
-                      <h2 class="card__panel__heading"><span class="heading-char">✓</span> Fix Analysis</h2>
-                      <div class="card__panel__markdown"><h2 id="details">Details</h2>
-          <p>Sensitive information should never be stored in plain text, since this makes it very easy for unauthorized users, whether malicious insiders or outside attackers, to access. Hashing methods are used to make stored passwords and other sensitive data unreadable to users. For example, when a password is defined for the first time, it is hashed and then stored. The next time that user attempts to log on, the password they enter is hashed following the same procedure and compared with the stored value. In this way, the original password never needs to be stored in the system.</p>
-          <p>Hashing is a one-way scheme, meaning a hashed password cannot be reverse engineered. However, if an outdated or custom programmed hashing scheme is used, it becomes simple for an attacker with powerful modern computing power to gain access to the hashes used. This opens up access to all stored password information, leading to breached security. Therefore, it is essential for developers to understand modern, secure password hashing techniques.</p>
-          <h2 id="best-practices-for-prevention">Best practices for prevention</h2>
-          <ul>
-          <li>Use strong standard algorithms for hashing rather than simpler but outdated methods or DIY hashing schemes, which may have inherent weaknesses.</li>
-          <li>Use modular design for all code dealing with hashing so it can be swapped out as security standards change over time.</li>
-          <li>Use salting in combination with hashing (While this places more demands on resources, it is an essential step for tighter security.).</li>
-          <li>Implement zero-trust architecture to ensure that access to password data is granted only for legitimate business purposes.</li>
-          <li>Increase developer awareness of current standards in data security and cryptography.</li>
-          </ul>
-          </div>
-                  </div>
-              </div>
-          </div>
-          <div class="card card--vuln  disclosure--not-new severity--low" data-snyk-test="low">
-              <header class="card__header">
-                  <div class="card__header__main">
-                      <div class="severity-icon severity-icon--low"></div>
-                      <h2 class="card__title">Use of Password Hash With Insufficient Computational Effort</h2>
-                      <div class="card__actions">
-                          <span class="card__action card-dataflow is-selected" onclick="toggleCardView(event)">Data Flow</span>
-                          <span class="card__action card-fix" onclick="toggleCardView(event)">Fix Analysis</span>
-                      </div>
-                  </div>
-                  <ul class="card__meta">
-                      <li class="card__meta__item">SNYK-CODE</li>
-                      <li class="card__meta__item">CWE-916</li>
-                      <li class="card__meta__item">InsecureHash</li>
-                  </ul>
-              </header>
-              <div class="card__section">
-                  <div class="card__summary severity--low">
-                      <p>MD5 hash (used in md5) is insecure. Consider changing it to a secure hashing algorithm.</p>
-                      <div class="file-location">Found in: <strong>project/vendor/phpunit/phpunit/src/Framework/MockObject/Generator/Generator.php (line : 927)</strong></div>    
-                  </div>
-                  <div class="card__panel dataflow">
-                      <h2 class="card__panel__heading"><span class="heading-char">⇣</span> Data Flow</h2>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">927:37</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">                             substr(<br /></span><span class="marker">md5(</span><span class="dataflow__codesuffix">(string) mt_rand()), 0, 8);</span></div>
                           <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span><span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
                           <span class="dataflow__step">0</span>
                       </div>
@@ -3961,15 +3913,15 @@
               </header>
               <div class="card__section">
                   <div class="card__summary severity--low">
-                      <p>MD5 hash (used in md5_file) is insecure. Consider changing it to a secure hashing algorithm.</p>
-                      <div class="file-location">Found in: <strong>project/vendor/thecodingmachine/safe/generated/strings.php (line : 62)</strong></div>    
+                      <p>MD5 hash (used in md5) is insecure. Consider changing it to a secure hashing algorithm.</p>
+                      <div class="file-location">Found in: <strong>project/vendor/phpunit/phpunit/src/Framework/MockObject/Generator/Generator.php (line : 213)</strong></div>    
                   </div>
                   <div class="card__panel dataflow">
                       <h2 class="card__panel__heading"><span class="heading-char">⇣</span> Data Flow</h2>
-                      <div class="dataflow__filename"> project/vendor/thecodingmachine/safe/generated/strings.php</div>
+                      <div class="dataflow__filename"> project/vendor/phpunit/phpunit/src/Framework/MockObject/Generator/Generator.php</div>
                       <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">62:19</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">    $safeResult &#x3D; <br /></span><span class="marker">\md5_file(</span><span class="dataflow__codesuffix">$filename, $binary);</span></div>
+                          <span class="dataflow__lineno" title="line:column">213:24</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">                substr(<br /></span><span class="marker">md5(</span><span class="dataflow__codesuffix">(string) mt_rand()), 0, 8),</span></div>
                           <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span><span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
                           <span class="dataflow__step">0</span>
                       </div>
@@ -4009,15 +3961,63 @@
               </header>
               <div class="card__section">
                   <div class="card__summary severity--low">
-                      <p>SHA1 hash (used in sha1_file) is insecure. Consider changing it to a secure hashing algorithm.</p>
-                      <div class="file-location">Found in: <strong>project/vendor/thecodingmachine/safe/generated/strings.php (line : 83)</strong></div>    
+                      <p>MD5 hash (used in md5) is insecure. Consider changing it to a secure hashing algorithm.</p>
+                      <div class="file-location">Found in: <strong>project/vendor/phpunit/phpunit/src/Framework/MockObject/Generator/Generator.php (line : 423)</strong></div>    
                   </div>
                   <div class="card__panel dataflow">
                       <h2 class="card__panel__heading"><span class="heading-char">⇣</span> Data Flow</h2>
                       
                       <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">83:19</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">    $safeResult &#x3D; <br /></span><span class="marker">\sha1_file(</span><span class="dataflow__codesuffix">$filename, $binary);</span></div>
+                          <span class="dataflow__lineno" title="line:column">423:16</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $key &#x3D; <br /></span><span class="marker">md5(</span><span class="dataflow__codesuffix"></span></div>
+                          <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span><span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
+                          <span class="dataflow__step">0</span>
+                      </div>
+                  </div>
+                  <div class="card__panel fix-analysis">
+                      <h2 class="card__panel__heading"><span class="heading-char">✓</span> Fix Analysis</h2>
+                      <div class="card__panel__markdown"><h2 id="details">Details</h2>
+          <p>Sensitive information should never be stored in plain text, since this makes it very easy for unauthorized users, whether malicious insiders or outside attackers, to access. Hashing methods are used to make stored passwords and other sensitive data unreadable to users. For example, when a password is defined for the first time, it is hashed and then stored. The next time that user attempts to log on, the password they enter is hashed following the same procedure and compared with the stored value. In this way, the original password never needs to be stored in the system.</p>
+          <p>Hashing is a one-way scheme, meaning a hashed password cannot be reverse engineered. However, if an outdated or custom programmed hashing scheme is used, it becomes simple for an attacker with powerful modern computing power to gain access to the hashes used. This opens up access to all stored password information, leading to breached security. Therefore, it is essential for developers to understand modern, secure password hashing techniques.</p>
+          <h2 id="best-practices-for-prevention">Best practices for prevention</h2>
+          <ul>
+          <li>Use strong standard algorithms for hashing rather than simpler but outdated methods or DIY hashing schemes, which may have inherent weaknesses.</li>
+          <li>Use modular design for all code dealing with hashing so it can be swapped out as security standards change over time.</li>
+          <li>Use salting in combination with hashing (While this places more demands on resources, it is an essential step for tighter security.).</li>
+          <li>Implement zero-trust architecture to ensure that access to password data is granted only for legitimate business purposes.</li>
+          <li>Increase developer awareness of current standards in data security and cryptography.</li>
+          </ul>
+          </div>
+                  </div>
+              </div>
+          </div>
+          <div class="card card--vuln  disclosure--not-new severity--low" data-snyk-test="low">
+              <header class="card__header">
+                  <div class="card__header__main">
+                      <div class="severity-icon severity-icon--low"></div>
+                      <h2 class="card__title">Use of Password Hash With Insufficient Computational Effort</h2>
+                      <div class="card__actions">
+                          <span class="card__action card-dataflow is-selected" onclick="toggleCardView(event)">Data Flow</span>
+                          <span class="card__action card-fix" onclick="toggleCardView(event)">Fix Analysis</span>
+                      </div>
+                  </div>
+                  <ul class="card__meta">
+                      <li class="card__meta__item">SNYK-CODE</li>
+                      <li class="card__meta__item">CWE-916</li>
+                      <li class="card__meta__item">InsecureHash</li>
+                  </ul>
+              </header>
+              <div class="card__section">
+                  <div class="card__summary severity--low">
+                      <p>MD5 hash (used in md5) is insecure. Consider changing it to a secure hashing algorithm.</p>
+                      <div class="file-location">Found in: <strong>project/vendor/phpunit/phpunit/src/Framework/MockObject/Generator/Generator.php (line : 927)</strong></div>    
+                  </div>
+                  <div class="card__panel dataflow">
+                      <h2 class="card__panel__heading"><span class="heading-char">⇣</span> Data Flow</h2>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">927:37</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">                             substr(<br /></span><span class="marker">md5(</span><span class="dataflow__codesuffix">(string) mt_rand()), 0, 8);</span></div>
                           <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span><span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
                           <span class="dataflow__step">0</span>
                       </div>
@@ -4168,14 +4168,14 @@
               <div class="card__section">
                   <div class="card__summary severity--low">
                       <p>MD5 hash (used in md5) is insecure. Consider changing it to a secure hashing algorithm.</p>
-                      <div class="file-location">Found in: <strong>project/vendor/infection/infection/src/Logger/Html/StrykerHtmlReportBuilder.php (line : 343)</strong></div>    
+                      <div class="file-location">Found in: <strong>project/vendor/infection/infection/src/Mutation/Mutation.php (line : 191)</strong></div>    
                   </div>
                   <div class="card__panel dataflow">
                       <h2 class="card__panel__heading"><span class="heading-char">⇣</span> Data Flow</h2>
-                      <div class="dataflow__filename"> project/vendor/infection/infection/src/Logger/Html/StrykerHtmlReportBuilder.php</div>
+                      <div class="dataflow__filename"> project/vendor/infection/infection/src/Mutation/Mutation.php</div>
                       <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">343:16</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        return <br /></span><span class="marker">md5(</span><span class="dataflow__codesuffix">$testMethod);</span></div>
+                          <span class="dataflow__lineno" title="line:column">191:16</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        return <br /></span><span class="marker">md5(</span><span class="dataflow__codesuffix">implode(&#x27;_&#x27;, $hashKeys));</span></div>
                           <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span><span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
                           <span class="dataflow__step">0</span>
                       </div>
@@ -4216,14 +4216,14 @@
               <div class="card__section">
                   <div class="card__summary severity--low">
                       <p>MD5 hash (used in md5) is insecure. Consider changing it to a secure hashing algorithm.</p>
-                      <div class="file-location">Found in: <strong>project/vendor/infection/infection/src/Mutation/Mutation.php (line : 191)</strong></div>    
+                      <div class="file-location">Found in: <strong>project/vendor/infection/infection/src/Logger/Html/StrykerHtmlReportBuilder.php (line : 343)</strong></div>    
                   </div>
                   <div class="card__panel dataflow">
                       <h2 class="card__panel__heading"><span class="heading-char">⇣</span> Data Flow</h2>
-                      <div class="dataflow__filename"> project/vendor/infection/infection/src/Mutation/Mutation.php</div>
+                      <div class="dataflow__filename"> project/vendor/infection/infection/src/Logger/Html/StrykerHtmlReportBuilder.php</div>
                       <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">191:16</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        return <br /></span><span class="marker">md5(</span><span class="dataflow__codesuffix">implode(&#x27;_&#x27;, $hashKeys));</span></div>
+                          <span class="dataflow__lineno" title="line:column">343:16</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        return <br /></span><span class="marker">md5(</span><span class="dataflow__codesuffix">$testMethod);</span></div>
                           <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span><span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
                           <span class="dataflow__step">0</span>
                       </div>
@@ -4360,122 +4360,6 @@
               <div class="card__section">
                   <div class="card__summary severity--low">
                       <p>Unsanitized input from data from a remote resource flows to loadXML. This may result in an XXE vulnerability. You may be vulnerable if using an old version of PHP (&lt;8.0)</p>
-                      <div class="file-location">Found in: <strong>project/vendor/infection/infection/src/TestFramework/PhpUnit/Adapter/PestAdapterFactory.php (line : 95)</strong></div>    
-                  </div>
-                  <div class="card__panel dataflow">
-                      <h2 class="card__panel__heading"><span class="heading-char">⇣</span> Data Flow</h2>
-                      <div class="dataflow__filename"> project/vendor/thecodingmachine/safe/generated/filesystem.php</div>
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">267:23</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $safeResult &#x3D; <br /></span><span class="marker">\file_get_contents(</span><span class="dataflow__codesuffix">$filename, $use_include_path, $context, $offset, $length);</span></div>
-                          <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span>
-                          <span class="dataflow__step">0</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">267:23</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $safeResult &#x3D; <br /></span><span class="marker">\file_get_contents(</span><span class="dataflow__codesuffix">$filename, $use_include_path, $context, $offset, $length);</span></div>
-                          
-                          <span class="dataflow__step">1</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">275:9</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">    if (<br /></span><span class="marker">$safeResult </span><span class="dataflow__codesuffix">&#x3D;&#x3D;&#x3D; false) {</span></div>
-                          
-                          <span class="dataflow__step">2</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">278:12</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">    return <br /></span><span class="marker">$safeResult;</span><span class="dataflow__codesuffix"></span></div>
-                          
-                          <span class="dataflow__step">3</span>
-                      </div>
-                      <div class="dataflow__filename"> project/vendor/infection/infection/src/TestFramework/PhpUnit/Adapter/PestAdapterFactory.php</div>
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">80:39</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $testFrameworkConfigContent &#x3D; <br /></span><span class="marker">file_get_contents(</span><span class="dataflow__codesuffix">$testFrameworkConfigPath);</span></div>
-                          
-                          <span class="dataflow__step">4</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">97:17</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">                <br /></span><span class="marker">$testFrameworkConfigContent,</span><span class="dataflow__codesuffix"></span></div>
-                          
-                          <span class="dataflow__step">5</span>
-                      </div>
-                      <div class="dataflow__filename"> project/vendor/infection/infection/src/TestFramework/PhpUnit/Config/Builder/InitialConfigBuilder.php</div>
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">61:9</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        <br /></span><span class="marker">string $originalXmlConfigContent,</span><span class="dataflow__codesuffix"></span></div>
-                          
-                          <span class="dataflow__step">6</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">68:13</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">            <br /></span><span class="marker">$originalXmlConfigContent,</span><span class="dataflow__codesuffix"></span></div>
-                          
-                          <span class="dataflow__step">7</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">71:43</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $this-&gt;originalXmlConfigContent &#x3D; <br /></span><span class="marker">$originalXmlConfigContent;</span><span class="dataflow__codesuffix"></span></div>
-                          
-                          <span class="dataflow__step">8</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">81:35</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $success &#x3D; @$dom-&gt;loadXML(<br /></span><span class="marker">$this-&gt;originalXmlConfigContent)</span><span class="dataflow__codesuffix">;</span></div>
-                          
-                          <span class="dataflow__step">9</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">81:21</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $success &#x3D; @<br /></span><span class="marker">$dom-&gt;loadXML(</span><span class="dataflow__codesuffix">$this-&gt;originalXmlConfigContent);</span></div>
-                          <span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
-                          <span class="dataflow__step">10</span>
-                      </div>
-                  </div>
-                  <div class="card__panel fix-analysis">
-                      <h2 class="card__panel__heading"><span class="heading-char">✓</span> Fix Analysis</h2>
-                      <div class="card__panel__markdown"><h2 id="details">Details</h2>
-          <p>For convenience, XML documents can use system identifiers to enable access to stored content, whether local or remote. The XML processor then uses the system identifier to access the resource rather than using the URI. When this weakness exists, the application permits user-supplied data, which could include the address of an XML external identity, to be passed directly to the XML parser. The application will then attempt to retrieve documents from outside of secure, controlled areas.</p>
-          <p>Attackers can exploit this weakness to expose sensitive data, execute port scanning on the server side, or launch a denial-of-service attack (DoS) such as Billion Laughs.</p>
-          <h2 id="best-practices-for-prevention">Best practices for prevention</h2>
-          <ul>
-          <li>When possible, disable loading of data from external entities. The method of doing this will vary based on the language and XML parser being used.</li>
-          <li>Use a local, static document type definitions (DTDs) and ensure that external DTDs are disallowed entirely.</li>
-          <li>If user input cannot be avoided, perform validation against an allowlist of possible data sources. However, as long as external DTDs are allowed, XML code remains inherently vulnerable to attacks exploiting this weakness.</li>
-          </ul>
-          </div>
-                  </div>
-              </div>
-          </div>
-          <div class="card card--vuln  disclosure--not-new severity--low" data-snyk-test="low">
-              <header class="card__header">
-                  <div class="card__header__main">
-                      <div class="severity-icon severity-icon--low"></div>
-                      <h2 class="card__title">XML External Entity (XXE) Injection</h2>
-                      <div class="card__actions">
-                          <span class="card__action card-dataflow is-selected" onclick="toggleCardView(event)">Data Flow</span>
-                          <span class="card__action card-fix" onclick="toggleCardView(event)">Fix Analysis</span>
-                      </div>
-                  </div>
-                  <ul class="card__meta">
-                      <li class="card__meta__item">SNYK-CODE</li>
-                      <li class="card__meta__item">CWE-611</li>
-                      <li class="card__meta__item">XxePrePHP8</li>
-                  </ul>
-              </header>
-              <div class="card__section">
-                  <div class="card__summary severity--low">
-                      <p>Unsanitized input from data from a remote resource flows to loadXML. This may result in an XXE vulnerability. You may be vulnerable if using an old version of PHP (&lt;8.0)</p>
                       <div class="file-location">Found in: <strong>project/vendor/phar-io/manifest/src/xml/ManifestDocument.php (line : 48)</strong></div>    
                   </div>
                   <div class="card__panel dataflow">
@@ -4507,122 +4391,6 @@
                           <div class="dataflow__code"><span class="dataflow__codeprefix">            <br /></span><span class="marker">$dom-&gt;loadXML(</span><span class="dataflow__codesuffix">$xmlString);</span></div>
                           <span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
                           <span class="dataflow__step">3</span>
-                      </div>
-                  </div>
-                  <div class="card__panel fix-analysis">
-                      <h2 class="card__panel__heading"><span class="heading-char">✓</span> Fix Analysis</h2>
-                      <div class="card__panel__markdown"><h2 id="details">Details</h2>
-          <p>For convenience, XML documents can use system identifiers to enable access to stored content, whether local or remote. The XML processor then uses the system identifier to access the resource rather than using the URI. When this weakness exists, the application permits user-supplied data, which could include the address of an XML external identity, to be passed directly to the XML parser. The application will then attempt to retrieve documents from outside of secure, controlled areas.</p>
-          <p>Attackers can exploit this weakness to expose sensitive data, execute port scanning on the server side, or launch a denial-of-service attack (DoS) such as Billion Laughs.</p>
-          <h2 id="best-practices-for-prevention">Best practices for prevention</h2>
-          <ul>
-          <li>When possible, disable loading of data from external entities. The method of doing this will vary based on the language and XML parser being used.</li>
-          <li>Use a local, static document type definitions (DTDs) and ensure that external DTDs are disallowed entirely.</li>
-          <li>If user input cannot be avoided, perform validation against an allowlist of possible data sources. However, as long as external DTDs are allowed, XML code remains inherently vulnerable to attacks exploiting this weakness.</li>
-          </ul>
-          </div>
-                  </div>
-              </div>
-          </div>
-          <div class="card card--vuln  disclosure--not-new severity--low" data-snyk-test="low">
-              <header class="card__header">
-                  <div class="card__header__main">
-                      <div class="severity-icon severity-icon--low"></div>
-                      <h2 class="card__title">XML External Entity (XXE) Injection</h2>
-                      <div class="card__actions">
-                          <span class="card__action card-dataflow is-selected" onclick="toggleCardView(event)">Data Flow</span>
-                          <span class="card__action card-fix" onclick="toggleCardView(event)">Fix Analysis</span>
-                      </div>
-                  </div>
-                  <ul class="card__meta">
-                      <li class="card__meta__item">SNYK-CODE</li>
-                      <li class="card__meta__item">CWE-611</li>
-                      <li class="card__meta__item">XxePrePHP8</li>
-                  </ul>
-              </header>
-              <div class="card__section">
-                  <div class="card__summary severity--low">
-                      <p>Unsanitized input from data from a remote resource flows to loadXML. This may result in an XXE vulnerability. You may be vulnerable if using an old version of PHP (&lt;8.0)</p>
-                      <div class="file-location">Found in: <strong>project/vendor/infection/infection/src/TestFramework/PhpUnit/Adapter/PhpUnitAdapterFactory.php (line : 95)</strong></div>    
-                  </div>
-                  <div class="card__panel dataflow">
-                      <h2 class="card__panel__heading"><span class="heading-char">⇣</span> Data Flow</h2>
-                      <div class="dataflow__filename"> project/vendor/thecodingmachine/safe/generated/filesystem.php</div>
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">267:23</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $safeResult &#x3D; <br /></span><span class="marker">\file_get_contents(</span><span class="dataflow__codesuffix">$filename, $use_include_path, $context, $offset, $length);</span></div>
-                          <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span>
-                          <span class="dataflow__step">0</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">267:23</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $safeResult &#x3D; <br /></span><span class="marker">\file_get_contents(</span><span class="dataflow__codesuffix">$filename, $use_include_path, $context, $offset, $length);</span></div>
-                          
-                          <span class="dataflow__step">1</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">275:9</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">    if (<br /></span><span class="marker">$safeResult </span><span class="dataflow__codesuffix">&#x3D;&#x3D;&#x3D; false) {</span></div>
-                          
-                          <span class="dataflow__step">2</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">278:12</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">    return <br /></span><span class="marker">$safeResult;</span><span class="dataflow__codesuffix"></span></div>
-                          
-                          <span class="dataflow__step">3</span>
-                      </div>
-                      <div class="dataflow__filename"> project/vendor/infection/infection/src/TestFramework/PhpUnit/Adapter/PhpUnitAdapterFactory.php</div>
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">80:39</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $testFrameworkConfigContent &#x3D; <br /></span><span class="marker">file_get_contents(</span><span class="dataflow__codesuffix">$testFrameworkConfigPath);</span></div>
-                          
-                          <span class="dataflow__step">4</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">97:17</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">                <br /></span><span class="marker">$testFrameworkConfigContent,</span><span class="dataflow__codesuffix"></span></div>
-                          
-                          <span class="dataflow__step">5</span>
-                      </div>
-                      <div class="dataflow__filename"> project/vendor/infection/infection/src/TestFramework/PhpUnit/Config/Builder/InitialConfigBuilder.php</div>
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">61:9</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        <br /></span><span class="marker">string $originalXmlConfigContent,</span><span class="dataflow__codesuffix"></span></div>
-                          
-                          <span class="dataflow__step">6</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">68:13</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">            <br /></span><span class="marker">$originalXmlConfigContent,</span><span class="dataflow__codesuffix"></span></div>
-                          
-                          <span class="dataflow__step">7</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">71:43</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $this-&gt;originalXmlConfigContent &#x3D; <br /></span><span class="marker">$originalXmlConfigContent;</span><span class="dataflow__codesuffix"></span></div>
-                          
-                          <span class="dataflow__step">8</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">81:35</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $success &#x3D; @$dom-&gt;loadXML(<br /></span><span class="marker">$this-&gt;originalXmlConfigContent)</span><span class="dataflow__codesuffix">;</span></div>
-                          
-                          <span class="dataflow__step">9</span>
-                      </div>
-                      
-                      <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">81:21</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $success &#x3D; @<br /></span><span class="marker">$dom-&gt;loadXML(</span><span class="dataflow__codesuffix">$this-&gt;originalXmlConfigContent);</span></div>
-                          <span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
-                          <span class="dataflow__step">10</span>
                       </div>
                   </div>
                   <div class="card__panel fix-analysis">
@@ -4858,11 +4626,11 @@
                   </div>
               </div>
           </div>
-          <div class="card card--vuln  disclosure--not-new severity--medium" data-snyk-test="medium">
+          <div class="card card--vuln  disclosure--not-new severity--low" data-snyk-test="low">
               <header class="card__header">
                   <div class="card__header__main">
-                      <div class="severity-icon severity-icon--medium"></div>
-                      <h2 class="card__title">Information Exposure</h2>
+                      <div class="severity-icon severity-icon--low"></div>
+                      <h2 class="card__title">XML External Entity (XXE) Injection</h2>
                       <div class="card__actions">
                           <span class="card__action card-dataflow is-selected" onclick="toggleCardView(event)">Data Flow</span>
                           <span class="card__action card-fix" onclick="toggleCardView(event)">Fix Analysis</span>
@@ -4870,74 +4638,221 @@
                   </div>
                   <ul class="card__meta">
                       <li class="card__meta__item">SNYK-CODE</li>
-                      <li class="card__meta__item">CWE-200</li>
-                      <li class="card__meta__item">ServerLeak</li>
+                      <li class="card__meta__item">CWE-611</li>
+                      <li class="card__meta__item">XxePrePHP8</li>
                   </ul>
               </header>
               <div class="card__section">
-                  <div class="card__summary severity--medium">
-                      <p>An exception object flows to 1 and is leaked to the attacker. This may disclose important information about the application to an attacker.</p>
-                      <div class="file-location">Found in: <strong>project/vendor/phpunit/phpunit/src/TextUI/Configuration/TestSuiteBuilder.php (line : 115)</strong></div>    
+                  <div class="card__summary severity--low">
+                      <p>Unsanitized input from data from a remote resource flows to loadXML. This may result in an XXE vulnerability. You may be vulnerable if using an old version of PHP (&lt;8.0)</p>
+                      <div class="file-location">Found in: <strong>project/vendor/infection/infection/src/TestFramework/PhpUnit/Adapter/PestAdapterFactory.php (line : 95)</strong></div>    
                   </div>
                   <div class="card__panel dataflow">
                       <h2 class="card__panel__heading"><span class="heading-char">⇣</span> Data Flow</h2>
-                      <div class="dataflow__filename"> project/vendor/phpunit/phpunit/src/TextUI/Configuration/TestSuiteBuilder.php</div>
+                      <div class="dataflow__filename"> project/vendor/thecodingmachine/safe/generated/filesystem.php</div>
                       <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">114:28</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        } catch (Exception <br /></span><span class="marker">$e)</span><span class="dataflow__codesuffix"> {</span></div>
+                          <span class="dataflow__lineno" title="line:column">267:23</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $safeResult &#x3D; <br /></span><span class="marker">\file_get_contents(</span><span class="dataflow__codesuffix">$filename, $use_include_path, $context, $offset, $length);</span></div>
                           <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span>
                           <span class="dataflow__step">0</span>
                       </div>
                       
                       <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">114:28</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">        } catch (Exception <br /></span><span class="marker">$e)</span><span class="dataflow__codesuffix"> {</span></div>
+                          <span class="dataflow__lineno" title="line:column">267:23</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $safeResult &#x3D; <br /></span><span class="marker">\file_get_contents(</span><span class="dataflow__codesuffix">$filename, $use_include_path, $context, $offset, $length);</span></div>
                           
                           <span class="dataflow__step">1</span>
                       </div>
                       
                       <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">115:19</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">            print <br /></span><span class="marker">$e-</span><span class="dataflow__codesuffix">&gt;getMessage() . PHP_EOL;</span></div>
+                          <span class="dataflow__lineno" title="line:column">275:9</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">    if (<br /></span><span class="marker">$safeResult </span><span class="dataflow__codesuffix">&#x3D;&#x3D;&#x3D; false) {</span></div>
                           
                           <span class="dataflow__step">2</span>
                       </div>
                       
                       <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">115:19</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">            print <br /></span><span class="marker">$e-&gt;getMessage(</span><span class="dataflow__codesuffix">) . PHP_EOL;</span></div>
+                          <span class="dataflow__lineno" title="line:column">278:12</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">    return <br /></span><span class="marker">$safeResult;</span><span class="dataflow__codesuffix"></span></div>
                           
                           <span class="dataflow__step">3</span>
                       </div>
-                      
+                      <div class="dataflow__filename"> project/vendor/infection/infection/src/TestFramework/PhpUnit/Adapter/PestAdapterFactory.php</div>
                       <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">115:19</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">            print <br /></span><span class="marker">$e-&gt;getMessage() . PHP_EOL;</span><span class="dataflow__codesuffix"></span></div>
+                          <span class="dataflow__lineno" title="line:column">80:39</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $testFrameworkConfigContent &#x3D; <br /></span><span class="marker">file_get_contents(</span><span class="dataflow__codesuffix">$testFrameworkConfigPath);</span></div>
                           
                           <span class="dataflow__step">4</span>
                       </div>
                       
                       <div class="dataflow__item">
-                          <span class="dataflow__lineno" title="line:column">115:19</span>
-                          <div class="dataflow__code"><span class="dataflow__codeprefix">            print <br /></span><span class="marker">$e-&gt;getMessage() . PHP_EOL;</span><span class="dataflow__codesuffix"></span></div>
-                          <span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
+                          <span class="dataflow__lineno" title="line:column">97:17</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">                <br /></span><span class="marker">$testFrameworkConfigContent,</span><span class="dataflow__codesuffix"></span></div>
+                          
                           <span class="dataflow__step">5</span>
+                      </div>
+                      <div class="dataflow__filename"> project/vendor/infection/infection/src/TestFramework/PhpUnit/Config/Builder/InitialConfigBuilder.php</div>
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">61:9</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        <br /></span><span class="marker">string $originalXmlConfigContent,</span><span class="dataflow__codesuffix"></span></div>
+                          
+                          <span class="dataflow__step">6</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">68:13</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">            <br /></span><span class="marker">$originalXmlConfigContent,</span><span class="dataflow__codesuffix"></span></div>
+                          
+                          <span class="dataflow__step">7</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">71:43</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $this-&gt;originalXmlConfigContent &#x3D; <br /></span><span class="marker">$originalXmlConfigContent;</span><span class="dataflow__codesuffix"></span></div>
+                          
+                          <span class="dataflow__step">8</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">81:35</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $success &#x3D; @$dom-&gt;loadXML(<br /></span><span class="marker">$this-&gt;originalXmlConfigContent)</span><span class="dataflow__codesuffix">;</span></div>
+                          
+                          <span class="dataflow__step">9</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">81:21</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $success &#x3D; @<br /></span><span class="marker">$dom-&gt;loadXML(</span><span class="dataflow__codesuffix">$this-&gt;originalXmlConfigContent);</span></div>
+                          <span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
+                          <span class="dataflow__step">10</span>
                       </div>
                   </div>
                   <div class="card__panel fix-analysis">
                       <h2 class="card__panel__heading"><span class="heading-char">✓</span> Fix Analysis</h2>
                       <div class="card__panel__markdown"><h2 id="details">Details</h2>
-          <p>Sensitive data includes: personally identifiable information (PII) of employees, customers, users, or other third parties; financial information; code; intellectual property; or protected network information such as passwords. Exposure of sensitive information to an unauthorized actor occurs when any party who does not require this information for business purposes can remove this information from the secure network.
-          Consequences of exposure can include holding it for ransom payment, identity theft, or access to other internal network resources-along with financial loss due to regulatory fines, court settlements, or cost to restore compromised systems. As most attackers aim to extract sensitive information, this CWE only describes exploits that take advantage of vulnerabilities related to how data is handled: the management, storage, transfer, or removal of sensitive information.</p>
+          <p>For convenience, XML documents can use system identifiers to enable access to stored content, whether local or remote. The XML processor then uses the system identifier to access the resource rather than using the URI. When this weakness exists, the application permits user-supplied data, which could include the address of an XML external identity, to be passed directly to the XML parser. The application will then attempt to retrieve documents from outside of secure, controlled areas.</p>
+          <p>Attackers can exploit this weakness to expose sensitive data, execute port scanning on the server side, or launch a denial-of-service attack (DoS) such as Billion Laughs.</p>
           <h2 id="best-practices-for-prevention">Best practices for prevention</h2>
           <ul>
-          <li>Encrypt data at all times, whether in transit or at rest.</li>
-          <li>When transporting data, always use a secure protocol such as TLS.</li>
-          <li>Before collecting PII or financial information, consider whether there is a true business need for this information; similarly, before storing the data, ensure that there is an ongoing business need.</li>
-          <li>Classify all incoming data according to privacy and security guidelines to improve awareness of sensitive data.</li>
-          <li>Ensure that caching is disabled for all transactions involving sensitive information.</li>
-          <li>Store passwords with secure, salted hashing functions.</li>
-          <li>Apply a network-wide least-privilege policy so sensitive data is provided only to users with business need to know.</li>
+          <li>When possible, disable loading of data from external entities. The method of doing this will vary based on the language and XML parser being used.</li>
+          <li>Use a local, static document type definitions (DTDs) and ensure that external DTDs are disallowed entirely.</li>
+          <li>If user input cannot be avoided, perform validation against an allowlist of possible data sources. However, as long as external DTDs are allowed, XML code remains inherently vulnerable to attacks exploiting this weakness.</li>
+          </ul>
+          </div>
+                  </div>
+              </div>
+          </div>
+          <div class="card card--vuln  disclosure--not-new severity--low" data-snyk-test="low">
+              <header class="card__header">
+                  <div class="card__header__main">
+                      <div class="severity-icon severity-icon--low"></div>
+                      <h2 class="card__title">XML External Entity (XXE) Injection</h2>
+                      <div class="card__actions">
+                          <span class="card__action card-dataflow is-selected" onclick="toggleCardView(event)">Data Flow</span>
+                          <span class="card__action card-fix" onclick="toggleCardView(event)">Fix Analysis</span>
+                      </div>
+                  </div>
+                  <ul class="card__meta">
+                      <li class="card__meta__item">SNYK-CODE</li>
+                      <li class="card__meta__item">CWE-611</li>
+                      <li class="card__meta__item">XxePrePHP8</li>
+                  </ul>
+              </header>
+              <div class="card__section">
+                  <div class="card__summary severity--low">
+                      <p>Unsanitized input from data from a remote resource flows to loadXML. This may result in an XXE vulnerability. You may be vulnerable if using an old version of PHP (&lt;8.0)</p>
+                      <div class="file-location">Found in: <strong>project/vendor/infection/infection/src/TestFramework/PhpUnit/Adapter/PhpUnitAdapterFactory.php (line : 95)</strong></div>    
+                  </div>
+                  <div class="card__panel dataflow">
+                      <h2 class="card__panel__heading"><span class="heading-char">⇣</span> Data Flow</h2>
+                      <div class="dataflow__filename"> project/vendor/thecodingmachine/safe/generated/filesystem.php</div>
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">267:23</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $safeResult &#x3D; <br /></span><span class="marker">\file_get_contents(</span><span class="dataflow__codesuffix">$filename, $use_include_path, $context, $offset, $length);</span></div>
+                          <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span>
+                          <span class="dataflow__step">0</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">267:23</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $safeResult &#x3D; <br /></span><span class="marker">\file_get_contents(</span><span class="dataflow__codesuffix">$filename, $use_include_path, $context, $offset, $length);</span></div>
+                          
+                          <span class="dataflow__step">1</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">275:9</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">    if (<br /></span><span class="marker">$safeResult </span><span class="dataflow__codesuffix">&#x3D;&#x3D;&#x3D; false) {</span></div>
+                          
+                          <span class="dataflow__step">2</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">278:12</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">    return <br /></span><span class="marker">$safeResult;</span><span class="dataflow__codesuffix"></span></div>
+                          
+                          <span class="dataflow__step">3</span>
+                      </div>
+                      <div class="dataflow__filename"> project/vendor/infection/infection/src/TestFramework/PhpUnit/Adapter/PhpUnitAdapterFactory.php</div>
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">80:39</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $testFrameworkConfigContent &#x3D; <br /></span><span class="marker">file_get_contents(</span><span class="dataflow__codesuffix">$testFrameworkConfigPath);</span></div>
+                          
+                          <span class="dataflow__step">4</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">97:17</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">                <br /></span><span class="marker">$testFrameworkConfigContent,</span><span class="dataflow__codesuffix"></span></div>
+                          
+                          <span class="dataflow__step">5</span>
+                      </div>
+                      <div class="dataflow__filename"> project/vendor/infection/infection/src/TestFramework/PhpUnit/Config/Builder/InitialConfigBuilder.php</div>
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">61:9</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        <br /></span><span class="marker">string $originalXmlConfigContent,</span><span class="dataflow__codesuffix"></span></div>
+                          
+                          <span class="dataflow__step">6</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">68:13</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">            <br /></span><span class="marker">$originalXmlConfigContent,</span><span class="dataflow__codesuffix"></span></div>
+                          
+                          <span class="dataflow__step">7</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">71:43</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $this-&gt;originalXmlConfigContent &#x3D; <br /></span><span class="marker">$originalXmlConfigContent;</span><span class="dataflow__codesuffix"></span></div>
+                          
+                          <span class="dataflow__step">8</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">81:35</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $success &#x3D; @$dom-&gt;loadXML(<br /></span><span class="marker">$this-&gt;originalXmlConfigContent)</span><span class="dataflow__codesuffix">;</span></div>
+                          
+                          <span class="dataflow__step">9</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">81:21</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        $success &#x3D; @<br /></span><span class="marker">$dom-&gt;loadXML(</span><span class="dataflow__codesuffix">$this-&gt;originalXmlConfigContent);</span></div>
+                          <span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
+                          <span class="dataflow__step">10</span>
+                      </div>
+                  </div>
+                  <div class="card__panel fix-analysis">
+                      <h2 class="card__panel__heading"><span class="heading-char">✓</span> Fix Analysis</h2>
+                      <div class="card__panel__markdown"><h2 id="details">Details</h2>
+          <p>For convenience, XML documents can use system identifiers to enable access to stored content, whether local or remote. The XML processor then uses the system identifier to access the resource rather than using the URI. When this weakness exists, the application permits user-supplied data, which could include the address of an XML external identity, to be passed directly to the XML parser. The application will then attempt to retrieve documents from outside of secure, controlled areas.</p>
+          <p>Attackers can exploit this weakness to expose sensitive data, execute port scanning on the server side, or launch a denial-of-service attack (DoS) such as Billion Laughs.</p>
+          <h2 id="best-practices-for-prevention">Best practices for prevention</h2>
+          <ul>
+          <li>When possible, disable loading of data from external entities. The method of doing this will vary based on the language and XML parser being used.</li>
+          <li>Use a local, static document type definitions (DTDs) and ensure that external DTDs are disallowed entirely.</li>
+          <li>If user input cannot be avoided, perform validation against an allowlist of possible data sources. However, as long as external DTDs are allowed, XML code remains inherently vulnerable to attacks exploiting this weakness.</li>
           </ul>
           </div>
                   </div>
@@ -5028,6 +4943,91 @@
                           <div class="dataflow__code"><span class="dataflow__codeprefix">        print <br /></span><span class="marker">Version::getVersionString() . PHP_EOL . PHP_EOL . $message . PHP_EOL;</span><span class="dataflow__codesuffix"></span></div>
                           <span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
                           <span class="dataflow__step">8</span>
+                      </div>
+                  </div>
+                  <div class="card__panel fix-analysis">
+                      <h2 class="card__panel__heading"><span class="heading-char">✓</span> Fix Analysis</h2>
+                      <div class="card__panel__markdown"><h2 id="details">Details</h2>
+          <p>Sensitive data includes: personally identifiable information (PII) of employees, customers, users, or other third parties; financial information; code; intellectual property; or protected network information such as passwords. Exposure of sensitive information to an unauthorized actor occurs when any party who does not require this information for business purposes can remove this information from the secure network.
+          Consequences of exposure can include holding it for ransom payment, identity theft, or access to other internal network resources-along with financial loss due to regulatory fines, court settlements, or cost to restore compromised systems. As most attackers aim to extract sensitive information, this CWE only describes exploits that take advantage of vulnerabilities related to how data is handled: the management, storage, transfer, or removal of sensitive information.</p>
+          <h2 id="best-practices-for-prevention">Best practices for prevention</h2>
+          <ul>
+          <li>Encrypt data at all times, whether in transit or at rest.</li>
+          <li>When transporting data, always use a secure protocol such as TLS.</li>
+          <li>Before collecting PII or financial information, consider whether there is a true business need for this information; similarly, before storing the data, ensure that there is an ongoing business need.</li>
+          <li>Classify all incoming data according to privacy and security guidelines to improve awareness of sensitive data.</li>
+          <li>Ensure that caching is disabled for all transactions involving sensitive information.</li>
+          <li>Store passwords with secure, salted hashing functions.</li>
+          <li>Apply a network-wide least-privilege policy so sensitive data is provided only to users with business need to know.</li>
+          </ul>
+          </div>
+                  </div>
+              </div>
+          </div>
+          <div class="card card--vuln  disclosure--not-new severity--medium" data-snyk-test="medium">
+              <header class="card__header">
+                  <div class="card__header__main">
+                      <div class="severity-icon severity-icon--medium"></div>
+                      <h2 class="card__title">Information Exposure</h2>
+                      <div class="card__actions">
+                          <span class="card__action card-dataflow is-selected" onclick="toggleCardView(event)">Data Flow</span>
+                          <span class="card__action card-fix" onclick="toggleCardView(event)">Fix Analysis</span>
+                      </div>
+                  </div>
+                  <ul class="card__meta">
+                      <li class="card__meta__item">SNYK-CODE</li>
+                      <li class="card__meta__item">CWE-200</li>
+                      <li class="card__meta__item">ServerLeak</li>
+                  </ul>
+              </header>
+              <div class="card__section">
+                  <div class="card__summary severity--medium">
+                      <p>An exception object flows to 1 and is leaked to the attacker. This may disclose important information about the application to an attacker.</p>
+                      <div class="file-location">Found in: <strong>project/vendor/phpunit/phpunit/src/TextUI/Configuration/TestSuiteBuilder.php (line : 115)</strong></div>    
+                  </div>
+                  <div class="card__panel dataflow">
+                      <h2 class="card__panel__heading"><span class="heading-char">⇣</span> Data Flow</h2>
+                      <div class="dataflow__filename"> project/vendor/phpunit/phpunit/src/TextUI/Configuration/TestSuiteBuilder.php</div>
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">114:28</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        } catch (Exception <br /></span><span class="marker">$e)</span><span class="dataflow__codesuffix"> {</span></div>
+                          <span class="dataflow__badge" title="Data is 'tainted' if it comes from an insecure source such as a file, the network, or the user. This tainted data is passed to a sensitive sink, as described below.">Source</span>
+                          <span class="dataflow__step">0</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">114:28</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">        } catch (Exception <br /></span><span class="marker">$e)</span><span class="dataflow__codesuffix"> {</span></div>
+                          
+                          <span class="dataflow__step">1</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">115:19</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">            print <br /></span><span class="marker">$e-</span><span class="dataflow__codesuffix">&gt;getMessage() . PHP_EOL;</span></div>
+                          
+                          <span class="dataflow__step">2</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">115:19</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">            print <br /></span><span class="marker">$e-&gt;getMessage(</span><span class="dataflow__codesuffix">) . PHP_EOL;</span></div>
+                          
+                          <span class="dataflow__step">3</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">115:19</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">            print <br /></span><span class="marker">$e-&gt;getMessage() . PHP_EOL;</span><span class="dataflow__codesuffix"></span></div>
+                          
+                          <span class="dataflow__step">4</span>
+                      </div>
+                      
+                      <div class="dataflow__item">
+                          <span class="dataflow__lineno" title="line:column">115:19</span>
+                          <div class="dataflow__code"><span class="dataflow__codeprefix">            print <br /></span><span class="marker">$e-&gt;getMessage() . PHP_EOL;</span><span class="dataflow__codesuffix"></span></div>
+                          <span class="dataflow__badge" title="Sinks are the operations that must receive clean data and that you wouldn't want an attacker to be able to manipulate.">Sink</span>
+                          <span class="dataflow__step">5</span>
                       </div>
                   </div>
                   <div class="card__panel fix-analysis">
