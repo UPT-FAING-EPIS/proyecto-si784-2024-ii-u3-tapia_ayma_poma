@@ -97,23 +97,6 @@ jobs:
         with:
           sarif_file: project/informes/snyk/snyk.sarif  # Subir el archivo SARIF generado
 
-      # Commit y push de los informes al repositorio principal (rama main)
-      - name: Push Snyk reports to main branch
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add project/informes/snyk/*
-          git commit -m "Add Snyk reports" || echo "No changes to commit"
-          
-          # Limpiar cualquier cambio no confirmado
-          git reset --hard
-
-          # Asegurarse de que los cambios remotos estén integrados
-          git pull origin main --rebase
-
-          # Subir los cambios a la rama main
-          git push origin main
-
   semgrep:
     name: Run Semgrep Analysis
     runs-on: ubuntu-latest
@@ -155,13 +138,13 @@ jobs:
         run: |
           prospector-html --input project/informes/segrem/semgrep.json --output project/informes/segrem/semgrep-report.html --filter semgrep || true  # Convertir el JSON a HTML
 
-      # Paso 8: Commit y push de los informes a la rama main
-      - name: Push Semgrep reports to main branch
+      # Paso 8: Commit y push de los informes a la rama main (solo una vez al final)
+      - name: Commit and push all reports to main branch
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add project/informes/segrem/*
-          git commit -m "Add Semgrep reports" || echo "No changes to commit"
+          git add project/informes/*
+          git commit -m "Add analysis reports from SonarCloud, Snyk, and Semgrep" || echo "No changes to commit"
           
           # Limpiar cualquier cambio no confirmado
           git reset --hard
