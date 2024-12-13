@@ -51,10 +51,13 @@ jobs:
       # Iniciar el servidor PHP
       - name: Start PHP Server
         run: |
+          # Cambiar al directorio project/public
+          cd project/public
           # Iniciar el servidor PHP en segundo plano
-          php -S localhost:8000 -t project/public &
+          php -S localhost:8000 &
           # Esperar unos segundos para asegurarse de que el servidor está listo
           sleep 30
+
 
       # Verificar si el servidor PHP está funcionando
       - name: Check if PHP server is running
