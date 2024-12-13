@@ -6,9 +6,9 @@
 ## Desarrollo de un Sistema de Gestión de Tareas y Notificaciones Personalizadas para la Mejora de la Productividad
 
 **INTEGRANTES**  
-**Erick Ayma**  
-**Fabiola Poma**  
-**Dylan Tapia**
+**Erick Ayma Choque**  
+**Fabiola Poma Machicado**  
+**Dylan Tapia Vargas**
 
 ---
 
