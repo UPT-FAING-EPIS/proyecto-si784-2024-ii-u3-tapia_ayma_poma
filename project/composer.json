@@ -16,7 +16,11 @@
         "phpunit/phpunit": "^11.4",
         "mockery/mockery": "^1.6",
         "phpunit/php-code-coverage": "^11.0",
-        "infection/infection": "^0.29.8"
+        "infection/infection": "^0.29.8",
+        "codeception/codeception": "^5.1",
+        "codeception/module-phpbrowser": "*",
+        "codeception/module-asserts": "*",
+        "allure-framework/allure-codeception": "^2.4"
     },
     "autoload": {
         "psr-4": {
