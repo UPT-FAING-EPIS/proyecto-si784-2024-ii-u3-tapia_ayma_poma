@@ -44,25 +44,21 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Forzar uso de PHP 8.2
-    - name: Use PHP 8.2
-      run: sudo update-alternatives --set php /usr/bin/php8.2
-
     # Genera cobertura y pruebas de mutación
     - name: Generate PHPUnit coverage (XML)
       run: |
         cd project
-        php vendor/bin/phpunit --coverage-xml=coverage
+        ~/.phpenv/versions/8.2/bin/php vendor/bin/phpunit --coverage-xml=coverage
 
     - name: Generate infection HTML report
       run: |
         cd project
-        php vendor/bin/infection --coverage=coverage --logger-html=informes/mutacion/infection-log.html
+        ~/.phpenv/versions/8.2/bin/php vendor/bin/infection --coverage=coverage --logger-html=informes/mutacion/infection-log.html
 
     - name: Generate infection summary
       run: |
         cd project
-        php vendor/bin/infection --coverage=coverage --formatter=progress > informes/mutacion/infection-summary.txt
+        ~/.phpenv/versions/8.2/bin/php vendor/bin/infection --coverage=coverage --formatter=progress > informes/mutacion/infection-summary.txt
 
     # Sube los informes como artefactos
     - name: Upload mutation test reports as artifacts
@@ -105,7 +101,7 @@ jobs:
         dotnet build project/tests/UI/AppTest.csproj
         dotnet test project/tests/UI/AppTest.csproj --collect:"XPlat Code Coverage"
 
-    # Sube videos como artefactos
+    # Subir videos como artefactos
     - name: Upload Test Videos
       if: always()
       uses: actions/upload-artifact@v3
