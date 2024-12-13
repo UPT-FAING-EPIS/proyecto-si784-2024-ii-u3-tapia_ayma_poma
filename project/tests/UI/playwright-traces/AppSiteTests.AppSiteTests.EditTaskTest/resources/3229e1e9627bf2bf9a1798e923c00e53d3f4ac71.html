@@ -1,0 +1,39 @@
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Tarea</title>
+</head>
+<body>
+    <div class="edit-task-container">
+        <h1>Editar Tarea</h1>
+                    <form action="/task/edit/3" method="POST">
+                <label for="title">Título:</label>
+                <input type="text" name="title" id="title" value="Nueva Tarea" required><br><br>
+
+                <label for="description">Descripción:</label>
+                <textarea name="description" id="description">Descripción de la tarea</textarea><br><br>
+
+                <label for="category_id">Categoría:</label>
+                <select name="category_id">
+                                                                        <option value="1" selected>
+                                the                            </option>
+                                                            </select><br><br>
+
+                <label for="due_date">Fecha de vencimiento:</label>
+                <input type="date" name="due_date" id="due_date" value="2024-12-31"><br><br>
+
+                <label for="is_completed">Completada:</label>
+                <input type="checkbox" name="is_completed" id="is_completed" value="1" 
+                    >
+
+                <button type="submit">Actualizar Tarea</button>
+            </form>
+
+                <a href="/dashboard">Volver al Dashboard</a>
+    </div>
+</body>
+</html>
