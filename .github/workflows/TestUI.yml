@@ -28,16 +28,6 @@ jobs:
         with:
           php-version: '8.0'
 
-      # Instalar PowerShell (si no está disponible)
-      - name: Install PowerShell
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget apt-transport-https software-properties-common
-          wget -q "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb"
-          sudo dpkg -i packages-microsoft-prod.deb
-          sudo apt-get update
-          sudo apt-get install -y powershell
-
       # Instalar dependencias de Playwright
       - name: Install Playwright dependencies
         run: |
@@ -51,18 +41,12 @@ jobs:
       # Iniciar el servidor PHP
       - name: Start PHP Server
         run: |
-          # Cambiar al directorio project/public
+          # Cambiar al directorio 'project/public'
           cd project/public
           # Iniciar el servidor PHP en segundo plano
           php -S localhost:8000 &
           # Esperar unos segundos para asegurarse de que el servidor está listo
           sleep 30
-
-
-      # Verificar si el servidor PHP está funcionando
-      - name: Check if PHP server is running
-        run: |
-          curl --silent --fail http://localhost:8000 || exit 1
 
       # Ejecutar las pruebas
       - name: Run Playwright tests
