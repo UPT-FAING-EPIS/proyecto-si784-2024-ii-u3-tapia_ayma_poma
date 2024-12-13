@@ -72,6 +72,14 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add project/informes/snyk/*
           git commit -m "Add Snyk reports" || echo "No changes to commit"
-          git pull origin main --rebase  # Asegurarse de que los cambios remotos estén integrados
-          git push origin main  # Subir los cambios a la rama main
+          
+          # Limpiar cualquier cambio no confirmado
+          git reset --hard
+
+          # Asegurarse de que los cambios remotos estén integrados
+          git pull origin main --rebase
+
+          # Subir los cambios a la rama main
+          git push origin main
+
 
