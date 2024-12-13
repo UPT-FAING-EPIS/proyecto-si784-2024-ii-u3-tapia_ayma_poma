@@ -101,14 +101,16 @@ jobs:
         dotnet build project/tests/UI/AppTest.csproj
         dotnet test project/tests/UI/AppTest.csproj --collect:"XPlat Code Coverage"
 
-    # Subir videos como artefactos
+    - name: Create videos folder if it doesn't exist
+      run: mkdir -p project/tests/UI/videos/
+    
     - name: Upload Test Videos
       if: always()
       uses: actions/upload-artifact@v3
       with:
         name: test-videos
         path: project/tests/UI/videos/
-
+        
     # Generar reporte de cobertura
     - name: Generate Coverage Report
       run: |
