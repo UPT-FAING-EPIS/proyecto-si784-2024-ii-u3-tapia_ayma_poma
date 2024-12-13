@@ -44,11 +44,11 @@ jobs:
       run: |
         prospector-html --input semgrep.json --output semgrep-report.html --filter semgrep || true  # Convertir el JSON a HTML
 
-    # Paso 8: Mover el reporte HTML a la carpeta 'informes/segrem'
+    # Paso 8: Mover el reporte HTML a la carpeta 'project/informes/segrem'
     - name: Move report to Reportes folder
       run: |
         mkdir -p project/informes/segrem  # Crear la carpeta si no existe
-        mv semgrep-report.html informes/segrem/  # Mover el reporte HTML a la carpeta
+        mv semgrep-report.html project/informes/segrem/  # Mover el reporte HTML a la carpeta
 
     # Paso 9: Configurar Git para hacer commit en la rama main
     - name: Configure Git for main branch
