@@ -59,6 +59,12 @@ jobs:
       - name: Check HTML report existence
         run: ls -la project/informes/snyk/snyk-report.html
 
+      # Subir el archivo SARIF a GitHub Code Scanning
+      - name: Upload Snyk SARIF result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: project/informes/snyk/snyk.sarif  # Subir el archivo SARIF generado
+
       # Commit y push de los informes al repositorio principal (rama main)
       - name: Push Snyk reports to main branch
         run: |
