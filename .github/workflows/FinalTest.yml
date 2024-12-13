@@ -59,6 +59,7 @@ jobs:
         php vendor/bin/infection --coverage=coverage --formatter=progress > informes/mutacion/infection-summary.txt
 
 
+
     # Realiza commit y push de los informes generados al repositorio
     - name: Commit and push reports to repository
       run: |
