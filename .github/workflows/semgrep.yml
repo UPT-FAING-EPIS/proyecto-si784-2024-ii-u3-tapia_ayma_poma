@@ -47,21 +47,20 @@ jobs:
     # Paso 8: Mover el reporte HTML a la carpeta 'informes/segrem'
     - name: Move report to Reportes folder
       run: |
-        mkdir -p project/informes/segrem  # Crear la carpeta si no existe
-        mv semgrep-report.html project/informes/segrem/  # Mover el reporte HTML a la carpeta
+        mkdir -p informes/segrem  # Crear la carpeta si no existe
+        mv semgrep-report.html informes/segrem/  # Mover el reporte HTML a la carpeta
 
-    # Paso 9: Configurar Git para publicar en GitHub Pages
-    - name: Configure Git for GitHub Pages
+    # Paso 9: Configurar Git para hacer commit en la rama main
+    - name: Configure Git for main branch
       run: |
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@github.com"
 
-    # Paso 10: Publicar el reporte HTML en la rama gh-pages
-    - name: Publish report to GitHub Pages
+    # Paso 10: Publicar el reporte HTML en la rama main
+    - name: Publish report to main branch
       run: |
-        git fetch origin gh-pages  # Fetch la rama gh-pages
-        git checkout gh-pages || git checkout --orphan gh-pages  # Si no existe, crea una nueva rama
-        cp project/informes/segrem/semgrep-report.html semgrep-report.html  # Copiar el reporte HTML generado
-        git add semgrep-report.html  # Añadir el archivo HTML a la rama gh-pages
+        git checkout main  # Asegurarse de estar en la rama 'main'
+        cp informes/segrem/semgrep-report.html semgrep-report.html  # Copiar el reporte HTML generado
+        git add semgrep-report.html  # Añadir el archivo HTML a la rama main
         git commit -m "Publishing Semgrep report as semgrep-report.html" || echo "No changes to commit"  # Si no hay cambios, no hacer commit
-        git push origin gh-pages  # Subir los cambios a la rama gh-pages
+        git push origin main  # Subir los cambios a la rama main
