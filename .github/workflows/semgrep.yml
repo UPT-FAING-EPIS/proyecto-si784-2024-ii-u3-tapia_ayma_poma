@@ -47,7 +47,7 @@ jobs:
     # Paso 8: Mover el reporte HTML a la carpeta 'informes/segrem'
     - name: Move report to Reportes folder
       run: |
-        mkdir -p informes/segrem  # Crear la carpeta si no existe
+        mkdir -p project/informes/segrem  # Crear la carpeta si no existe
         mv semgrep-report.html informes/segrem/  # Mover el reporte HTML a la carpeta
 
     # Paso 9: Configurar Git para hacer commit en la rama main
