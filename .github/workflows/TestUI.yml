@@ -22,13 +22,13 @@ jobs:
         run: |
           ls -R
 
-      # Instalar .NET 8
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+      # Instalar PHP
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          dotnet-version: '8.x'
+          php-version: '8.0'
 
-      # Instalar dependencias de Playwright (ajustar si no usas Playwright)
+      # Instalar dependencias de Playwright
       - name: Install Playwright dependencies
         run: |
           dotnet build project/tests/UI/AppTest.csproj
@@ -38,8 +38,16 @@ jobs:
       - name: Clean old videos
         run: rm -rf project/tests/UI/videos
 
-      # Construir y ejecutar pruebas
-      - name: Build and Test
+      # Iniciar el servidor PHP
+      - name: Start PHP Server
+        run: |
+          # Iniciar el servidor PHP en segundo plano
+          php -S localhost:8000 -t /ruta/a/tu/carpeta/del/proyecto &
+          # Esperar unos segundos para asegurarse de que el servidor está listo
+          sleep 10
+
+      # Ejecutar las pruebas
+      - name: Run Playwright tests
         run: |
           dotnet build project/tests/UI/AppTest.csproj
           dotnet test project/tests/UI/AppTest.csproj --collect:"XPlat Code Coverage"
@@ -52,7 +60,7 @@ jobs:
           name: test-videos
           path: project/tests/UI/videos/
 
-      # Generar Reporte de Cobertura
+      # Generar reporte de cobertura
       - name: Generate Coverage Report
         run: |
           dotnet tool install -g dotnet-reportgenerator-globaltool
