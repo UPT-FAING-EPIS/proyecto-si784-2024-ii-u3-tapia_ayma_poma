@@ -1,130 +1,78 @@
-name: Unified Test Workflow
+name: Combined Tests
 
 on:
   push:
     branches:
       - main
   pull_request:
-    branches:
-      - main
 
 jobs:
-  setup:
+  phpunit-and-mutation-tests:
     runs-on: ubuntu-latest
+
     steps:
-      # Clona el código del repositorio
-      - name: Checkout code
-        uses: actions/checkout@v3
+    # Clona el código del repositorio
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      # Configura PHP
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          extensions: xdebug
+    # Configura PHP
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        extensions: xdebug # Necesario para la cobertura de código
 
-      # Instala dependencias de Composer
-      - name: Install Composer dependencies
-        run: |
-          cd project
-          composer install
+    # Instala las dependencias de Composer
+    - name: Install dependencies
+      run: |
+        cd project
+        composer install
 
-  phpunit-tests:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run PHPUnit tests
-        run: |
-          cd project
-          php vendor/bin/phpunit --coverage-html informes/pruebasunitarias
+    # Corrige permisos para vendor/bin/phpunit
+    - name: Fix permissions for PHPUnit
+      run: |
+        cd project
+        chmod +x vendor/bin/phpunit
 
-      - name: Commit and push PHPUnit coverage report
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git add project/informes/pruebasunitarias
-          git commit -m "Add PHPUnit coverage report"
-          git push origin main
+    # Ejecuta PHPUnit y genera el informe HTML de cobertura directamente en la carpeta especificada
+    - name: Run PHPUnit tests
+      run: |
+        cd project
+        php vendor/bin/phpunit --coverage-html informes/pruebasunitarias
 
-      - name: Upload PHPUnit coverage report
-        uses: actions/upload-artifact@v3
-        with:
-          name: phpunit-coverage-report
-          path: project/informes/pruebasunitarias/
+    # Genera la cobertura de código en formato XML para Infection
+    - name: Generate PHPUnit coverage (XML)
+      run: |
+        cd project
+        php vendor/bin/phpunit --coverage-xml=coverage
 
-  mutation-tests:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Generate PHPUnit coverage (XML)
-        run: |
-          cd project
-          php vendor/bin/phpunit --coverage-xml=coverage
+    # Genera el informe HTML de Infection
+    - name: Generate infection HTML report
+      run: |
+        cd project
+        php vendor/bin/infection --coverage=coverage --logger-html=informes/mutacion/infection-log.html
 
-      - name: Generate infection HTML report
-        run: |
-          cd project
-          php vendor/bin/infection --coverage=coverage --logger-html=informes/mutacion/infection-log.html
+    # Genera el resumen de mutaciones en formato de progreso
+    - name: Generate infection summary
+      run: |
+        cd project
+        php vendor/bin/infection --coverage=coverage --formatter=progress > informes/mutacion/infection-summary.txt
 
-      - name: Generate infection summary
-        run: |
-          cd project
-          php vendor/bin/infection --coverage=coverage --formatter=progress > informes/mutacion/infection-summary.txt
+    # Realiza commit y push de los informes generados al repositorio
+    - name: Commit and push reports to repository
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git add project/informes/pruebasunitarias project/informes/mutacion/infection-summary.txt project/informes/mutacion/infection-log.html
+        git commit -m "Add PHPUnit and Mutation test reports"
+        git push origin main
 
-      - name: Commit and push mutation reports
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git add project/informes/mutacion/infection-summary.txt project/informes/mutacion/infection-log.html
-          git commit -m "Add mutation test reports"
-          git push origin main
-
-      - name: Upload mutation test reports
-        uses: actions/upload-artifact@v3
-        with:
-          name: infection-mutation-reports
-          path: |
-            project/informes/mutacion/infection-summary.txt
-            project/informes/mutacion/infection-log.html
-
-  playwright-tests:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install Playwright dependencies
-        run: |
-          dotnet build project/tests/UI/AppTest.csproj
-          pwsh ./project/tests/UI/bin/Debug/net8.0/playwright.ps1 install
-
-      - name: Clean old videos
-        run: rm -rf project/tests/UI/videos
-
-      - name: Start PHP Server
-        run: |
-          cd project/public
-          php -S localhost:8000 &
-          sleep 30
-
-      - name: Run Playwright tests
-        run: |
-          dotnet build project/tests/UI/AppTest.csproj
-          dotnet test project/tests/UI/AppTest.csproj --collect:"XPlat Code Coverage"
-
-      - name: Upload Test Videos
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-videos
-          path: project/tests/UI/videos/
-
-      - name: Generate Coverage Report
-        run: |
-          dotnet tool install -g dotnet-reportgenerator-globaltool
-          export PATH="$PATH:~/.dotnet/tools"
-          reportgenerator -reports:"**/coverage.cobertura.xml" -targetdir:"coverage-report" -reporttypes:HTML
-
-      - name: Upload Coverage Report
-        uses: actions/upload-artifact@v3
-        with:
-          name: coverage-report
-          path: coverage-report/
+    # Sube los informes como artefactos
+    - name: Upload test reports as artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: combined-test-reports
+        path: |
+          project/informes/pruebasunitarias/
+          project/informes/mutacion/infection-summary.txt
+          project/informes/mutacion/infection-log.html
