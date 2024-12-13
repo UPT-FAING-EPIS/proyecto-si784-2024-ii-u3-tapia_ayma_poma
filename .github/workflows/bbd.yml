@@ -43,27 +43,17 @@ jobs:
           sudo mv allure-2.18.1 /opt/allure
           sudo ln -s /opt/allure/bin/allure /usr/local/bin/allure
 
-      - name: Make Codeception executable
-        run: |
-          cd project  # Cambia al directorio del proyecto
-          chmod +x vendor/bin/codecept  # Otorga permisos de ejecución al archivo de Codeception
-
-      - name: Bootstrap Codeception
-        run: |
-          cd project  # Cambia al directorio del proyecto
-          vendor/bin/codecept bootstrap
-
       - name: Build Codeception
         run: |
           cd project  # Cambia al directorio del proyecto
-          vendor/bin/codecept build
+          vendor/bin/codecept build  # Prepara el entorno de pruebas
 
       - name: Run Tests
         run: |
           cd project  # Cambia al directorio del proyecto
-          vendor/bin/codecept run --debug --ext Qameta\Allure\Codeception\AllureCodeception
+          vendor/bin/codecept run --debug --ext Qameta\Allure\Codeception\AllureCodeception  # Ejecuta las pruebas y genera el reporte
 
       - name: Generate Allure Report
         run: |
           cd project  # Cambia al directorio del proyecto
-          allure generate tests/_output/allure-results -o ./project/informes/bbd --clean  # Generar el reporte de Allure
+          allure generate tests/_output/allure-results -o ./project/informes/bbd --clean  # Genera el reporte de Allure
