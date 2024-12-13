@@ -60,15 +60,6 @@ jobs:
 
 
 
-    # Realiza commit y push de los informes generados al repositorio
-    - name: Commit and push reports to repository
-      run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git add project/informes/pruebasunitarias project/informes/mutacion/infection-summary.txt project/informes/mutacion/infection-log.html
-        git commit -m "Add PHPUnit and Mutation test reports"
-        git push origin main
-        
     # Sube los informes como artefactos
     - name: Upload test reports as artifacts
       uses: actions/upload-artifact@v3
