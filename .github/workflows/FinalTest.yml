@@ -1,4 +1,4 @@
-name: Unified Workflow
+name: Unified CI Workflow
 
 on:
   push:
@@ -9,92 +9,133 @@ on:
       - main
 
 jobs:
+  setup:
+    name: Setup Environment
+    runs-on: ubuntu-latest
+
+    steps:
+    # Clona el código del repositorio
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Configura PHP
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        extensions: xdebug
+
+    # Instala las dependencias de Composer
+    - name: Install dependencies
+      run: |
+        cd project
+        composer install
+
   mutation-tests:
+    name: Mutation Tests
+    needs: setup
     runs-on: ubuntu-latest
 
     steps:
-      # Clonar el repositorio
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      # Configurar PHP
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          extensions: xdebug # Necesario para cobertura
+    # Genera cobertura y pruebas de mutación
+    - name: Generate PHPUnit coverage (XML)
+      run: |
+        cd project
+        php vendor/bin/phpunit --coverage-xml=coverage
 
-      # Instalar dependencias
-      - name: Install dependencies
-        run: |
-          cd project
-          composer install
+    - name: Generate infection HTML report
+      run: |
+        cd project
+        php vendor/bin/infection --coverage=coverage --logger-html=informes/mutacion/infection-log.html
 
-      # Crear directorios para informes
-      - name: Create directories for reports
-        run: |
-          mkdir -p project/informes/mutacion
+    - name: Generate infection summary
+      run: |
+        cd project
+        php vendor/bin/infection --coverage=coverage --formatter=progress > informes/mutacion/infection-summary.txt
 
-      # Corregir permisos para directorios de informes
-      - name: Fix permissions for mutation report directory
-        run: |
-          chmod -R 777 project/informes/mutacion
+    # Sube los informes como artefactos
+    - name: Upload mutation test reports as artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: infection-mutation-reports
+        path: |
+          project/informes/mutacion/infection-summary.txt
+          project/informes/mutacion/infection-log.html
 
-      # Generar cobertura de PHPUnit
-      - name: Generate PHPUnit coverage (XML)
-        run: |
-          cd project
-          php vendor/bin/phpunit --coverage-xml=coverage
-
-      # Generar informe HTML de Infection
-      - name: Generate infection HTML report
-        run: |
-          cd project
-          php vendor/bin/infection --coverage=coverage --logger-html=informes/mutacion/infection-log.html
-
-      # Generar resumen de mutaciones
-      - name: Generate infection summary
-        run: |
-          cd project
-          php vendor/bin/infection --coverage=coverage --formatter=progress > informes/mutacion/infection-summary.txt
-
-      # Subir informes de Infection como artefactos
-      - name: Upload mutation test reports as artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: infection-mutation-reports
-          path: |
-            project/informes/mutacion/infection-summary.txt
-            project/informes/mutacion/infection-log.html
-
-  generate-test-report:
+  ui-tests:
+    name: UI Tests
+    needs: setup
     runs-on: ubuntu-latest
 
     steps:
-      # Clonar el repositorio
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      # Configurar el entorno de .NET
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0'
+    # Instalar dependencias de Playwright
+    - name: Install Playwright dependencies
+      run: |
+        dotnet build project/tests/UI/AppTest.csproj
+        pwsh ./project/tests/UI/bin/Debug/net8.0/playwright.ps1 install
 
-      # Restaurar dependencias y compilar
-      - name: Restore and Build
-        run: |
-          dotnet restore
-          dotnet build
+    # Limpiar videos anteriores (si existen)
+    - name: Clean old videos
+      run: rm -rf project/tests/UI/videos
 
-      # Ejecutar pruebas con NUnit o xUnit
-      - name: Run Tests
-        run: |
-          dotnet test --logger "trx;LogFileName=test_results.xml"
+    # Iniciar el servidor PHP
+    - name: Start PHP Server
+      run: |
+        cd project/public
+        php -S localhost:8000 &
+        sleep 30
 
-      # Subir resultados de pruebas como artefactos
-      - name: Upload Test Results
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-results
-          path: '**/test_results.xml'
+    # Ejecutar las pruebas
+    - name: Run Playwright tests
+      run: |
+        dotnet build project/tests/UI/AppTest.csproj
+        dotnet test project/tests/UI/AppTest.csproj --collect:"XPlat Code Coverage"
+
+    # Subir videos como artefactos
+    - name: Upload Test Videos
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-videos
+        path: project/tests/UI/videos/
+
+    # Generar reporte de cobertura
+    - name: Generate Coverage Report
+      run: |
+        dotnet tool install -g dotnet-reportgenerator-globaltool
+        export PATH="$PATH:~/.dotnet/tools"
+        reportgenerator -reports:"**/coverage.cobertura.xml" -targetdir:"coverage-report" -reporttypes:HTML
+
+    # Publicar artefactos (Reporte HTML)
+    - name: Upload Coverage Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-report
+        path: coverage-report/
+
+  report-generation:
+    name: Generate Reports
+    needs: [mutation-tests, ui-tests]
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Combine and Upload All Reports
+      run: |
+        mkdir -p combined-reports
+        cp -r project/informes/mutacion/* combined-reports/
+        cp -r coverage-report/* combined-reports/
+
+    - name: Upload Combined Reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: combined-reports
+        path: combined-reports/
