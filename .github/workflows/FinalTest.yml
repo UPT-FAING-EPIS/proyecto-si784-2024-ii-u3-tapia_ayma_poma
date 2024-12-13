@@ -1,4 +1,4 @@
-name: Unified CI Workflow
+name: Unified Test Workflow
 
 on:
   push:
@@ -10,117 +10,121 @@ on:
 
 jobs:
   setup:
-    name: Setup Environment
     runs-on: ubuntu-latest
-
     steps:
-    # Clona el código del repositorio
-    - name: Checkout code
-      uses: actions/checkout@v3
+      # Clona el código del repositorio
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # Configura PHP
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.2'
-        extensions: xdebug
+      # Configura PHP
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: xdebug
 
-    # Verifica la versión de PHP
-    - name: Verify PHP version
-      run: php -v
+      # Instala dependencias de Composer
+      - name: Install Composer dependencies
+        run: |
+          cd project
+          composer install
 
-    # Instala las dependencias de Composer
-    - name: Install dependencies
-      run: |
-        cd project
-        composer install
+  phpunit-tests:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run PHPUnit tests
+        run: |
+          cd project
+          php vendor/bin/phpunit --coverage-html informes/pruebasunitarias
+
+      - name: Commit and push PHPUnit coverage report
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add project/informes/pruebasunitarias
+          git commit -m "Add PHPUnit coverage report"
+          git push origin main
+
+      - name: Upload PHPUnit coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: phpunit-coverage-report
+          path: project/informes/pruebasunitarias/
 
   mutation-tests:
-    name: Mutation Tests
     needs: setup
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Generate PHPUnit coverage (XML)
+        run: |
+          cd project
+          php vendor/bin/phpunit --coverage-xml=coverage
 
-    # Genera cobertura y pruebas de mutación
-    - name: Generate PHPUnit coverage (XML)
-      run: |
-        cd project
-        php vendor/bin/phpunit --coverage-xml=coverage
+      - name: Generate infection HTML report
+        run: |
+          cd project
+          php vendor/bin/infection --coverage=coverage --logger-html=informes/mutacion/infection-log.html
 
-    - name: Generate infection HTML report
-      run: |
-        cd project
-        php vendor/bin/infection --coverage=coverage --logger-html=informes/mutacion/infection-log.html
+      - name: Generate infection summary
+        run: |
+          cd project
+          php vendor/bin/infection --coverage=coverage --formatter=progress > informes/mutacion/infection-summary.txt
 
-    - name: Generate infection summary
-      run: |
-        cd project
-        php vendor/bin/infection --coverage=coverage --formatter=progress > informes/mutacion/infection-summary.txt
+      - name: Commit and push mutation reports
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add project/informes/mutacion/infection-summary.txt project/informes/mutacion/infection-log.html
+          git commit -m "Add mutation test reports"
+          git push origin main
 
-    # Sube los informes como artefactos
-    - name: Upload mutation test reports as artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: infection-mutation-reports
-        path: |
-          project/informes/mutacion/infection-summary.txt
-          project/informes/mutacion/infection-log.html
+      - name: Upload mutation test reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: infection-mutation-reports
+          path: |
+            project/informes/mutacion/infection-summary.txt
+            project/informes/mutacion/infection-log.html
 
-  ui-tests:
-    name: UI Tests
+  playwright-tests:
     needs: setup
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Install Playwright dependencies
+        run: |
+          dotnet build project/tests/UI/AppTest.csproj
+          pwsh ./project/tests/UI/bin/Debug/net8.0/playwright.ps1 install
 
-    # Instalar dependencias de Playwright
-    - name: Install Playwright dependencies
-      run: |
-        dotnet build project/tests/UI/AppTest.csproj
-        pwsh ./project/tests/UI/bin/Debug/net8.0/playwright.ps1 install
+      - name: Clean old videos
+        run: rm -rf project/tests/UI/videos
 
-    # Limpiar videos anteriores (si existen)
-    - name: Clean old videos
-      run: rm -rf project/tests/UI/videos
+      - name: Start PHP Server
+        run: |
+          cd project/public
+          php -S localhost:8000 &
+          sleep 30
 
-    # Iniciar el servidor PHP
-    - name: Start PHP Server
-      run: |
-        cd project/public
-        php -S localhost:8000 &
-        sleep 30
+      - name: Run Playwright tests
+        run: |
+          dotnet build project/tests/UI/AppTest.csproj
+          dotnet test project/tests/UI/AppTest.csproj --collect:"XPlat Code Coverage"
 
-    # Ejecutar las pruebas
-    - name: Run Playwright tests
-      run: |
-        dotnet build project/tests/UI/AppTest.csproj
-        dotnet test project/tests/UI/AppTest.csproj --collect:"XPlat Code Coverage"
+      - name: Upload Test Videos
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-videos
+          path: project/tests/UI/videos/
 
-    - name: Create videos folder if it doesn't exist
-      run: mkdir -p project/tests/UI/videos/
-    
-    - name: Upload Test Videos
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: test-videos
-        path: project/tests/UI/videos/
-        
-    # Generar reporte de cobertura
-    - name: Generate Coverage Report
-      run: |
-        dotnet tool install -g dotnet-reportgenerator-globaltool
-        export PATH="$PATH:~/.dotnet/tools"
-        reportgenerator -reports:"**/coverage.cobertura.xml" -targetdir:"coverage-report" -reporttypes:HTML
+      - name: Generate Coverage Report
+        run: |
+          dotnet tool install -g dotnet-reportgenerator-globaltool
+          export PATH="$PATH:~/.dotnet/tools"
+          reportgenerator -reports:"**/coverage.cobertura.xml" -targetdir:"coverage-report" -reporttypes:HTML
 
-    # Publicar artefactos (Reporte HTML)
-    - name: Upload Coverage Report
-      uses: actions/upload-artifact@v3
-      with:
-        name: coverage-report
-        path: coverage-report/
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: coverage-report/
