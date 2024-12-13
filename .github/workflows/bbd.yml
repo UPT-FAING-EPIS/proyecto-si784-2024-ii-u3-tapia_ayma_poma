@@ -19,7 +19,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'  # Ajusta la versión de PHP según sea necesario
+          php-version: '8.2'  # Ajusta la versión de PHP según sea necesario 
 
       - name: Install dependencies
         run: |
@@ -43,14 +43,15 @@ jobs:
           sudo mv allure-2.18.1 /opt/allure
           sudo ln -s /opt/allure/bin/allure /usr/local/bin/allure
 
-      - name: Check if Codeception is initialized
+      - name: Make Codeception executable
         run: |
-          cd project
-          if [ ! -f "vendor/bin/codecept" ]; then
-            vendor/bin/codecept bootstrap
-          else
-            echo "Codeception already initialized."
-        continue-on-error: true  # Si hay error, continuar sin detener el flujo de trabajo
+          cd project  # Cambia al directorio del proyecto
+          chmod +x vendor/bin/codecept  # Otorga permisos de ejecución al archivo de Codeception
+
+      - name: Bootstrap Codeception
+        run: |
+          cd project  # Cambia al directorio del proyecto
+          vendor/bin/codecept bootstrap
 
       - name: Build Codeception
         run: |
