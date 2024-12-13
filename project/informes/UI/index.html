@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Playwright Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px auto;
+            max-width: 1200px;
+            background: #181818;
+            color: #f5f5f5;
+            padding: 20px;
+        }
+        .section {
+            background: #282828;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        img, video {
+            max-width: 100%;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        h1 {
+            text-align: center;
+            color: #FFD700;
+        }
+        h2 {
+            color: #1E90FF;
+            border-bottom: 2px solid #1E90FF;
+            padding-bottom: 10px;
+        }
+        h3 {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Playwright Results</h1>
+
+    <!-- Featured Video Section -->
+    <div class='section'>
+        <h2>Featured Video</h2>
+        <video controls autoplay muted>
+            <source src="videos/8075c42da2a41f6d61f4ca03d047262b.webm" type="video/webm">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Screenshots Section -->
+    <div class='section'>
+        <h2>Screenshots</h2>
+        <div><h3>appIcon.png</h3><img src="appIcon.png" alt="Screenshot: appIcon.png"></div>
+        <div><h3>after-registration.png</h3><img src="after-registration.png" alt="Screenshot: after-registration.png"></div>
+        <div><h3>before-registration.png</h3><img src="before-registration.png" alt="Screenshot: before-registration.png"></div>
+        <div><h3>cancelled-subscription.png</h3><img src="cancelled-subscription.png" alt="Screenshot: cancelled-subscription.png"></div>
+        <div><h3>login-page.png</h3><img src="login-page.png" alt="Screenshot: login-page.png"></div>
+        <div><h3>premium-success.png</h3><img src="premium-success.png" alt="Screenshot: premium-success.png"></div>
+        <div><h3>after-login-verification.png</h3><img src="after-login-verification.png" alt="Screenshot: after-login-verification.png"></div>
+        <div><h3>after-login-failure.png</h3><img src="after-login-failure.png" alt="Screenshot: after-login-failure.png"></div>
+        <div><h3>before-login.png</h3><img src="before-login.png" alt="Screenshot: before-login.png"></div>
+        <div><h3>premium-link-not-found.png</h3><img src="premium-link-not-found.png" alt="Screenshot: premium-link-not-found.png"></div>
+        <div><h3>premium-subscription.png</h3><img src="premium-subscription.png" alt="Screenshot: premium-subscription.png"></div>
+        <div><h3>after-login-premium.png</h3><img src="after-login-premium.png" alt="Screenshot: after-login-premium.png"></div>
+        <div><h3>operations-button-missing.png</h3><img src="operations-button-missing.png" alt="Screenshot: operations-button-missing.png"></div>
+        <div><h3>premium-page.png</h3><img src="premium-page.png" alt="Screenshot: premium-page.png"></div>
+        <div><h3>after-login-success.png</h3><img src="after-login-success.png" alt="Screenshot: after-login-success.png"></div>
+        <div><h3>before-login-failure.png</h3><img src="before-login-failure.png" alt="Screenshot: before-login-failure.png"></div>
+    </div>
+
+    <!-- Test Videos Section -->
+    <div class='section'>
+        <h2>Test Videos</h2>
+        <div><h3>AppSiteTests.AppSiteTests.CreateNotification</h3><video controls src="videos/8075c42da2a41f6d61f4ca03d047262b.webm"></video></div>
+        <div><h3>AppSiteTests.AppSiteTests.CreateTaskTest</h3><video controls src="videos/769b78d768846d5f8da370ad4a32377c.webm"></video></div>
+        <div><h3>AppSiteTests.AppSiteTests.DeleteNotification</h3><video controls src="videos/03aa42605e9f9252b3dbf5acf972f00c.webm"></video></div>
+        <div><h3>AppSiteTests.AppSiteTests.DeleteTaskTest</h3><video controls src="videos/425a3544066172dfcda000175a714178.webm"></video></div>
+        <div><h3>AppSiteTests.AppSiteTests.EditTaskTest</h3><video controls src="videos/example_edit_task_test.webm"></video></div>
+        <div><h3>AppSiteTests.AppSiteTests.HasTitle</h3><video controls src="videos/example_has_title.webm"></video></div>
+        <div><h3>AppSiteTests.AppSiteTests.LoginTest</h3><video controls src="videos/example_login_test.webm"></video></div>
+        <div><h3>AppSiteTests.AppSiteTests.LoginTest_Error_NoRedirection</h3><video controls src="videos/example_login_error_no_redirection.webm"></video></div>
+        <div><h3>AppSiteTests.AppSiteTests.LogoutTest</h3><video controls src="videos/example_logout_test.webm"></video></div>
+        <div><h3>AppSiteTests.AppSiteTests.MarkNotificationAsRead</h3><video controls src="videos/example_mark_notification_as_read.webm"></video></div>
+        <div><h3>AppSiteTests.AppSiteTests.RegisterTest</h3><video controls src="videos/example_register_test.webm"></video></div>
+    </div>
+
+    <script>
+        // Set playback speed of all video elements to 2x
+        const videos = document.querySelectorAll('video');
+        videos.forEach(video => {
+            video.playbackRate = 2;
+        });
+    </script>
+</body>
+</html>
