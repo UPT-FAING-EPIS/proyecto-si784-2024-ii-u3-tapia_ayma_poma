@@ -42,7 +42,7 @@ jobs:
       - name: Start PHP Server
         run: |
           # Iniciar el servidor PHP en segundo plano
-          php -S localhost:8000 -t /ruta/a/tu/carpeta/del/proyecto &
+          php -S localhost:8000 -t project/public &
           # Esperar unos segundos para asegurarse de que el servidor está listo
           sleep 10
 
