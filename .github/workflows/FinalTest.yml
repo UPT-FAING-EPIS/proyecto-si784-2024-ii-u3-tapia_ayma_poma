@@ -1,0 +1,100 @@
+name: Unified Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  mutation-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Clonar el repositorio
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Configurar PHP
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: xdebug # Necesario para cobertura
+
+      # Instalar dependencias
+      - name: Install dependencies
+        run: |
+          cd project
+          composer install
+
+      # Crear directorios para informes
+      - name: Create directories for reports
+        run: |
+          mkdir -p project/informes/mutacion
+
+      # Corregir permisos para directorios de informes
+      - name: Fix permissions for mutation report directory
+        run: |
+          chmod -R 777 project/informes/mutacion
+
+      # Generar cobertura de PHPUnit
+      - name: Generate PHPUnit coverage (XML)
+        run: |
+          cd project
+          php vendor/bin/phpunit --coverage-xml=coverage
+
+      # Generar informe HTML de Infection
+      - name: Generate infection HTML report
+        run: |
+          cd project
+          php vendor/bin/infection --coverage=coverage --logger-html=informes/mutacion/infection-log.html
+
+      # Generar resumen de mutaciones
+      - name: Generate infection summary
+        run: |
+          cd project
+          php vendor/bin/infection --coverage=coverage --formatter=progress > informes/mutacion/infection-summary.txt
+
+      # Subir informes de Infection como artefactos
+      - name: Upload mutation test reports as artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: infection-mutation-reports
+          path: |
+            project/informes/mutacion/infection-summary.txt
+            project/informes/mutacion/infection-log.html
+
+  generate-test-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Clonar el repositorio
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Configurar el entorno de .NET
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0'
+
+      # Restaurar dependencias y compilar
+      - name: Restore and Build
+        run: |
+          dotnet restore
+          dotnet build
+
+      # Ejecutar pruebas con NUnit o xUnit
+      - name: Run Tests
+        run: |
+          dotnet test --logger "trx;LogFileName=test_results.xml"
+
+      # Subir resultados de pruebas como artefactos
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: '**/test_results.xml'
