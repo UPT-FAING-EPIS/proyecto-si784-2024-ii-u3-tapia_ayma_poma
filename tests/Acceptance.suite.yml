@@ -1,0 +1,16 @@
+actor: Tester
+extensions:
+    enabled:
+        - Codeception\Extension\RunFailed
+        - Qameta\Allure\Codeception\AllureCodeception  # Extensión de Allure
+    config:
+        Qameta\Allure\Codeception\AllureCodeception:
+            outputDirectory: allure-results  # Directorio para los resultados de Allure
+            linkTemplates:
+                issue: https://example.org/issues/%s  # Plantilla de enlaces (opcional)
+paths:
+    tests: tests  # Ubicación de las pruebas
+suites:
+    acceptance: tests/acceptance.suite.yml  # Ruta de la suite de aceptación
+    functional: tests/Functional  # Ruta de la suite funcional
+    unit: tests/Unit  # Ruta de la suite unitaria

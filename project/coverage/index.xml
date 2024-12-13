@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <phpunit xmlns="https://schema.phpunit.de/coverage/1.0">
-  <build time="Wed Nov 27 18:49:48 CET 2024" phpunit="11.4.3" coverage="11.0.7">
+  <build time="Fri Dec 13 17:18:23 CET 2024" phpunit="11.4.3" coverage="11.0.7">
     <runtime name="PHP" version="8.2.12" url="https://www.php.net/"/>
     <driver name="xdebug" version="3.3.2"/>
   </build>
-  <project source="C:\Users\TheGoat\Desktop\clone\proyecto-si784-2024-ii-u2-ayma_tapia_poma\project\app">
+  <project source="C:\Users\TheGoat\Desktop\clone\proyecto-si784-2024-ii-u3-tapia_ayma_poma\project\app">
     <tests>
       <test name="Tests\Unit\CategoryModelTest::testCreateCategorySuccess" size="unknown" status="success"/>
       <test name="Tests\Unit\CategoryModelTest::testCreateCategoryFailsWithoutName" size="unknown" status="success"/>
