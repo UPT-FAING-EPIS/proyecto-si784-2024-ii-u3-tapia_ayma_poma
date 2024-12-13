@@ -43,12 +43,6 @@ jobs:
         run: |
           curl -u ${SONAR_TOKEN}: -X POST "https://sonarcloud.io/api/ce/submit?projectKey=${{ secrets.SONAR_PROJECT_KEY }}" --output project/informes/sonarqube/sonar-report.sarif
 
-      # Subir reporte SARIF a GitHub Code Scanning
-      - name: Upload SARIF result to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: project/informes/sonarqube/sonar-report.sarif  # Subir el archivo SARIF generado
-
       # Generar reporte HTML con SonarQube
       - name: Generate HTML Report
         run: |
