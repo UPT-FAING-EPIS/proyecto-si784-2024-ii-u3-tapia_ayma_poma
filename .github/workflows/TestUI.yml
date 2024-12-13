@@ -17,6 +17,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Verificar estructura de carpetas para depuración
+      - name: List directories
+        run: |
+          ls -R
+
       # Instalar .NET 8
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
