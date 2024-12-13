@@ -47,6 +47,11 @@
         .button-container a:hover {
             background-color: #2980b9;
         }
+        .section-title {
+            color: #2980b9;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
@@ -74,17 +79,26 @@
             <img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" alt="JavaScript">
         </div>
 
-        <h2>Funcionalidades Principales</h2>
-        <ul>
-          <h1>Índice de Reportes</h1>
-          <div class="button-container">
+        <!-- Sección de pruebas estáticas -->
+        <h2 class="section-title">Pruebas Estáticas</h2>
+        <div class="button-container">
             <a href="snyk-report.html" class="button">Snyk</a>
             <a href="sonar-report.html" class="button">Sonar</a>
-            <a href="project/informes/segrem/semgrep-report.html" class="button">Semgrep</a> <!-- Ruta del reporte Semgrep -->
-            <a href="project/coverage-report/index.html" class="button">Coverage Report</a> <!-- Ruta del reporte de cobertura -->
-            <a href="project/informes/mutacion/infection-report.html" class="button">Infection Report</a> <!-- Ruta del reporte de infección -->
-          </div>
-        </ul>
+            <a href="project/informes/segrem/semgrep-report.html" class="button">Semgrep</a>
+        </div>
+
+        <hr>
+
+        <!-- Sección de pruebas automatizadas -->
+        <h2 class="section-title">Informe - Reportes de Pruebas Automatizadas</h2>
+        <h3>Pruebas Unitarias / Mutaciones / Integración / Interfaz de Usuario / BDD</h3>
+        <div class="button-container">
+            <!-- Actualización de rutas para Coverage y Mutation -->
+            <a href="file:///C:/Users/TheGoat/Desktop/proyecto-si784-2024-ii-u3-tapia_ayma_poma/project/informes/integracion/index.html" class="button">Coverage Report(Unitarias/Integración)</a>
+            <a href="file:///C:/Users/TheGoat/Desktop/proyecto-si784-2024-ii-u3-tapia_ayma_poma/project/informes/mutacion/infection-log.html" class="button">Infection Report</a> <!-- Ruta del reporte de infección -->
+            <a href="project/informes/interfaz/interfaz-report.html" class="button">Interfaz de Usuario</a> <!-- Ruta del reporte de Interfaz de Usuario -->
+            <a href="project/informes/bdd/bdd-report.html" class="button">BDD</a> <!-- Ruta del reporte de BDD -->
+        </div>
     </div>
 </body>
 </html>
